@@ -3,12 +3,26 @@ import axiosInstance from "@/lib/AxiosInstance";
 
 export const getAllCategory = async () => {
   try {
-    const res = await axiosInstance.get("/categories");
+    const res = await axiosInstance.get("/category/get-all-categories");
 
     if (!res.data.success) {
       throw new Error(res.data.message || "Error fetching categories");
     }
 
+    return res.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || error.message || "Error fetching data"
+    );
+  }
+};
+
+export const getSingleCategory = async (id: string) => {
+  try {
+    const res = await axiosInstance.get(`/category/${id}`);
+    if (!res.data.success) {
+      throw new Error(res.data.message || "Error fetching category");
+    }
     return res.data;
   } catch (error: any) {
     throw new Error(

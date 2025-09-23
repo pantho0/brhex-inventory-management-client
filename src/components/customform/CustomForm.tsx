@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 interface IFormConfig {
@@ -33,6 +33,12 @@ function CustomForm({
     onSubmit(data);
     // methods.reset();
   };
+
+  useEffect(() => {
+    if (defaultValues) {
+      methods.reset(defaultValues); // 👈 reset values when props change
+    }
+  }, [defaultValues, methods]);
 
   return (
     <FormProvider {...methods}>
