@@ -31,7 +31,6 @@ interface NavItemProps {
 
 export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
   const { user, loading, setLoading } = useUser();
-  console.log(loading);
   const router = useRouter();
 
   const [mounted, setMounted] = useState(false);
