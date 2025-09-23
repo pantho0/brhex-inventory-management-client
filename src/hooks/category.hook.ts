@@ -2,6 +2,7 @@ import {
   addCategory,
   getAllCategory,
   getSingleCategory,
+  updateCategory,
 } from "@/services/Category";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -24,5 +25,18 @@ export const useAddCategory = () => {
   return useMutation({
     mutationKey: ["category"],
     mutationFn: async (categoryData: any) => await addCategory(categoryData),
+  });
+};
+
+export const useUpdateCategory = () => {
+  return useMutation({
+    mutationKey: ["category"],
+    mutationFn: async ({
+      id,
+      categoryData,
+    }: {
+      id: string;
+      categoryData: any;
+    }) => await updateCategory(id, categoryData),
   });
 };

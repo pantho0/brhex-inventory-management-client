@@ -3,19 +3,38 @@ import TitleWrapper from "@/components/adminDashboard/TitleWrapper";
 import CustomForm from "@/components/customform/CustomForm";
 import CustomInput from "@/components/customform/CustomInput";
 import { Button } from "@/components/ui/button";
-import { useGetSingleCategory } from "@/hooks/category.hook";
+import { useGetSingleCategory, useUpdateCategory } from "@/hooks/category.hook";
 import React from "react";
+import { toast } from "sonner";
 
 function UpdateCategory({ params }: { params: Promise<{ id: string }> }) {
   const { id } = React.use(params);
 
   const { data: singleCategory, isLoading } = useGetSingleCategory(id);
+  const { mutate: updateCategory, isPending } = useUpdateCategory();
 
   const onSubmit = (data: any) => {
+    const toastId = toast.loading("Updating category...");
     const updatedData = {
       name: data.name.toLowerCase(),
     };
-    console.log(updatedData);
+    updateCategory(
+      { id, categoryData: updatedData },
+      {
+        onSuccess: () => {
+          toast.success("Category updated successfully", {
+            id: toastId,
+            duration: 2000,
+          });
+        },
+        onError: (error: any) => {
+          toast.error(
+            error?.response?.data?.message || "Failed to update category",
+            { id: toastId, duration: 2000 }
+          );
+        },
+      }
+    );
   };
 
   return (
@@ -40,7 +59,7 @@ function UpdateCategory({ params }: { params: Promise<{ id: string }> }) {
                 <Button
                   type="submit"
                   className="bg-primary cursor-pointer"
-                  //   disabled={isPending}
+                  disabled={isPending}
                 >
                   Update Category
                 </Button>
