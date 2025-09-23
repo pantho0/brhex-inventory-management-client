@@ -47,3 +47,17 @@ export const addCategory = async (categoryData: any) => {
     );
   }
 };
+
+export const updateCategory = async (id: string, categoryData: any) => {
+  try {
+    const res = await axiosInstance.put(`/category/${id}`, categoryData);
+    if (!res.data.success) {
+      throw new Error(res.data.message || "Error updating category");
+    }
+    return res.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || error.message || "Error fetching data"
+    );
+  }
+};
