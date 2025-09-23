@@ -1,0 +1,25 @@
+{
+    "navigations":{
+        "Home" :"Home",
+        "Menu" :"Menu",
+        "Reservation" :"Reservation",
+        "About" :"About",
+        "Contact" :"Contact"
+    },
+
+    "Homepage":{
+        "BannerTitle":"Perfectly Light In Every Bite",
+        "BannerDescription":"We have a proper passion for cooking. Love is the secret ingredient that makes all our meals taste better and magical."
+    },
+    "ShortBio":{
+        "SectionTitle":"Our Restaurant",
+        "Title":"For Every Special Occasion There's Heritaste",
+        "Description":"At Heritaste, we make every occasion special with authentic flavors and heartfelt hospitality. Our dishes are crafted to bring people together, turning family moments and celebrations into delicious, memorable experiences.",
+        "point1":"Quiet Environment",
+        "point1Description":"Objectively transition virtual functionalities via enterprise-wide benefits.",
+        "point2":"Hygienic Food",
+        "point2Description":"Objectively transition virtual functionalities via enterprise-wide benefits. Sagittis molestie nulla morbi ultrices.",
+        "ExploreUs":"Explore Us"
+
+    }
+}

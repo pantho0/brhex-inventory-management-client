@@ -1,0 +1,24 @@
+{
+    "navigations":{
+        "Home" :"Accueil",
+        "Menu" :"Menu",
+        "Reservation" :"Réservation",
+        "About" :"A propos",
+        "Contact" :"Contact"
+    },
+
+    "Homepage":{
+        "BannerTitle":"Parfaitement lumineux à chaque bouchée",
+        "BannerDescription":"Nous avons une passion propre pour la cuisine. L'amour est l'ingrédient secret qui rend tous nos repas plus délicieux et magiques."
+    },
+    "ShortBio":{
+        "SectionTitle":"Notre Restaurant",
+        "Title":"Pour chaque occasion spéciale il y a Heritaste",
+        "Description":"",
+        "point1":"Environnement paisible",
+        "point1Description":"Transférez objectivement les fonctionnalités virtuelles grâce à des avantages à l’échelle de l’entreprise.",
+        "point2":"Alimentation hygiénique",
+        "point2Description":"Transition objective des fonctionnalités virtuelles via les avantages de l'entreprise Widr Sagittis molestie nulla morbi ultrices. Mi ut nibh faucibus risus viverra tellus purus. Ornaré.",
+        "ExploreUs":"Explorer"
+    }
+}
