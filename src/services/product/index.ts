@@ -34,3 +34,17 @@ export const getAllProduct = async () => {
     );
   }
 };
+
+export const getProductById = async (id: string) => {
+  try {
+    const res = await axiosInstance.get(`/product/${id}`);
+    if (!res.data.success) {
+      throw new Error(res.data.message || "Error fetching product");
+    }
+    return res.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || error.message || "Error fetching product"
+    );
+  }
+};
