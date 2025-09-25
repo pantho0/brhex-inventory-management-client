@@ -17,7 +17,7 @@ import React from "react";
 function GetAllProductPage() {
   const { data } = useGetAllProduct();
   const products = data?.data;
-  console.log(products);
+
   return (
     <div className="text-black font-sans px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
       <TitleWrapper title="View All Products" />
