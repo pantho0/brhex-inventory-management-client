@@ -8,6 +8,7 @@ import { useGetCategory } from "@/hooks/category.hook";
 import { useGetProductById } from "@/hooks/product.hook";
 import React from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 
 function UpdateProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = React.use(params);
@@ -21,14 +22,16 @@ function UpdateProductPage({ params }: { params: Promise<{ id: string }> }) {
     value: cat?._id,
     label: cat?.name?.toUpperCase(),
   }));
-  const isLoading = false;
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    if (!data.name || !data.category) {
+      return toast.error("Please fill all the fields");
+    }
     console.log(data);
   };
   return (
     <div className="text-black font-sans px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
-      {isLoading ? (
+      {productByIdLoading ? (
         <p>Loading...</p>
       ) : (
         <>

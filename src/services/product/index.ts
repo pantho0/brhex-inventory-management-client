@@ -48,3 +48,17 @@ export const getProductById = async (id: string) => {
     );
   }
 };
+
+export const updateProduct = async (id: string, productData: any) => {
+  try {
+    const res = await axiosInstance.put(`/product/${id}`, productData);
+    if (!res.data.success) {
+      throw new Error(res.data.message || "Error updating product");
+    }
+    return res.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || error.message || "Error updating product"
+    );
+  }
+};

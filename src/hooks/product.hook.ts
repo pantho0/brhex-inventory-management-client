@@ -1,4 +1,9 @@
-import { addProduct, getAllProduct, getProductById } from "@/services/product";
+import {
+  addProduct,
+  getAllProduct,
+  getProductById,
+  updateProduct,
+} from "@/services/product";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useAddProduct = () => {
@@ -19,5 +24,13 @@ export const useGetProductById = (id: string) => {
   return useQuery({
     queryKey: ["get_product_by_id"],
     queryFn: async () => await getProductById(id),
+  });
+};
+
+export const useUpdateProduct = () => {
+  return useMutation({
+    mutationKey: ["update_product"],
+    mutationFn: async ({ id, productData }: any) =>
+      await updateProduct(id, productData),
   });
 };
