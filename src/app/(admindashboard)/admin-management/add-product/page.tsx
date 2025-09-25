@@ -5,11 +5,14 @@ import CustomInput from "@/components/customform/CustomInput";
 import CustomSelect from "@/components/customform/CustomSelect";
 import { Button } from "@/components/ui/button";
 import { useGetCategory } from "@/hooks/category.hook";
+import { useAddProduct } from "@/hooks/product.hook";
 import React from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 
 function AddProductPage() {
   const { data: fetchedData, isFetching: categoryLoading } = useGetCategory();
+  const { mutate: handleAddProduct, isPending } = useAddProduct();
 
   const categories = fetchedData?.data?.map((cat: any) => ({
     key: cat?._id,
@@ -18,7 +21,20 @@ function AddProductPage() {
   }));
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log("Submitted", data);
+    const toastId = toast.loading("Adding Product....");
+    handleAddProduct(data, {
+      onSuccess: () => {
+        toast.success("Product Added Successfully", { id: toastId });
+      },
+      onError: (error: any) => {
+        toast.error(
+          error.response?.data?.message ||
+            error.message ||
+            "Failed to Add Product",
+          { id: toastId }
+        );
+      },
+    });
   };
 
   return (
@@ -44,9 +60,9 @@ function AddProductPage() {
             <Button
               type="submit"
               className="bg-primary cursor-pointer"
-              disabled={false}
+              disabled={isPending}
             >
-              Add Category
+              Add Product
             </Button>
           </div>
         </CustomForm>
