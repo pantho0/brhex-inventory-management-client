@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 function GetAllCategory() {
-  const { data, isLoading, error } = useGetCategory();
+  const { data } = useGetCategory();
   const categories = data?.data;
   return (
     <div className="text-black  font-sans px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
@@ -22,7 +22,7 @@ function GetAllCategory() {
 
       <div>
         <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableCaption>A list of your categories.</TableCaption>
           <TableHeader className="bg-gray-600 text-white">
             <TableRow>
               <TableHead className="w-[100px] ">Category Name</TableHead>
