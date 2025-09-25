@@ -4,12 +4,15 @@ import CustomForm from "@/components/customform/CustomForm";
 import CustomInput from "@/components/customform/CustomInput";
 import CustomSelect from "@/components/customform/CustomSelect";
 import { Button } from "@/components/ui/button";
+import { useAddInventoryItem } from "@/hooks/inventory.hook";
 import { useGetAllProduct } from "@/hooks/product.hook";
 import React from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 
 function AddInventoryItemPage() {
   const { data: fetchedProducts, isLoading } = useGetAllProduct();
+  const { mutate: handleAddInventoryItem, isPending } = useAddInventoryItem();
 
   const products = fetchedProducts?.data?.map((product: any) => ({
     key: product?._id,
@@ -18,7 +21,20 @@ function AddInventoryItemPage() {
   }));
 
   const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
-    console.log(data);
+    const toastId = toast.loading("Adding inventory item...");
+    handleAddInventoryItem(data, {
+      onSuccess: () => {
+        toast.success("Inventory item added successfully", { id: toastId });
+      },
+      onError: (error: any) => {
+        toast.error(
+          error.response?.data?.message ||
+            error.message ||
+            "Error adding inventory item",
+          { id: toastId }
+        );
+      },
+    });
   };
 
   return (
@@ -47,7 +63,11 @@ function AddInventoryItemPage() {
               type="number"
               placeholder="Price"
             />
-            <Button type="submit" className="bg-primary cursor-pointer">
+            <Button
+              disabled={isPending}
+              type="submit"
+              className="bg-primary cursor-pointer"
+            >
               Add Inventory Item
             </Button>
           </div>
