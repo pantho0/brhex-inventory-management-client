@@ -51,3 +51,19 @@ export const getAllInventoryItemsByProductId = async (productId: string) => {
     );
   }
 };
+
+export const getInventoryItemBySerialNumber = async (serialNumber: string) => {
+  try {
+    const res = await axiosInstance.get(`/inventory/${serialNumber}`);
+    if (!res.data.success) {
+      throw new Error(res.data.message || "Error getting inventory item");
+    }
+    return res.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message ||
+        error.message ||
+        "Error getting inventory item"
+    );
+  }
+};

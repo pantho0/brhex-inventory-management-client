@@ -62,7 +62,7 @@ const GetAllInvByProductSerial = ({
                 </TableCell>
                 <TableCell className="text-right">
                   <Link
-                    href={`/admin-management/get-all-product/${product._id}`}
+                    href={`/admin-management/update-inventory/${product.serialNumber}`}
                   >
                     <Button
                       className="bg-transparent hover:bg-primary hover:cursor-pointer"
