@@ -67,3 +67,22 @@ export const getInventoryItemBySerialNumber = async (serialNumber: string) => {
     );
   }
 };
+
+export const updateInventoryItem = async (id: string, inventoryData: any) => {
+  try {
+    const res = await axiosInstance.put(
+      `/inventory/update/${id}`,
+      inventoryData
+    );
+    if (!res.data.success) {
+      throw new Error(res.data.message || "Error updating inventory item");
+    }
+    return res.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message ||
+        error.message ||
+        "Error updating inventory item"
+    );
+  }
+};

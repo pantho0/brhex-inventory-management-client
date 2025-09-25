@@ -3,6 +3,7 @@ import {
   addInventoryItem,
   getAllInventoryItems,
   getAllInventoryItemsByProductId,
+  getInventoryItemBySerialNumber,
 } from "../services/inventory";
 
 export const useAddInventoryItem = () => {
@@ -23,5 +24,12 @@ export const useGetAllInventoryItemsByProductId = (productId: string) => {
   return useQuery({
     queryKey: ["get-all-inventory-items-by-product-id"],
     queryFn: () => getAllInventoryItemsByProductId(productId),
+  });
+};
+
+export const useGetInventoryItemBySerialNumber = (serialNumber: string) => {
+  return useQuery({
+    queryKey: ["get-inventory-item-by-serial-number"],
+    queryFn: () => getInventoryItemBySerialNumber(serialNumber),
   });
 };
