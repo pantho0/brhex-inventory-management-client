@@ -45,13 +45,13 @@ function ViewAllInventoryItems() {
                 </TableCell>
                 <TableCell className="text-right">
                   <Link
-                    href={`/admin-management/get-all-inventory/${product._id}`}
+                    href={`/admin-management/get-all-inv-serial/${product._id}`}
                   >
                     <Button
                       className="bg-transparent hover:bg-primary hover:cursor-pointer"
                       variant="outline"
                     >
-                      Edit
+                      View Serials
                     </Button>
                   </Link>
                 </TableCell>
