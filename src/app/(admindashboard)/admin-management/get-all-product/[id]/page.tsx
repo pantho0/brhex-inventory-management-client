@@ -5,11 +5,15 @@ import CustomInput from "@/components/customform/CustomInput";
 import CustomSelect from "@/components/customform/CustomSelect";
 import { Button } from "@/components/ui/button";
 import { useGetCategory } from "@/hooks/category.hook";
+import { useGetProductById } from "@/hooks/product.hook";
 import React from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 function UpdateProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = React.use(params);
+  const { data: productById, isFetching: productByIdLoading } =
+    useGetProductById(id);
+  console.log(productById);
   const { data: fetchedData, isFetching: categoryLoading } = useGetCategory();
 
   const categories = fetchedData?.data?.map((cat: any) => ({
@@ -31,7 +35,13 @@ function UpdateProductPage({ params }: { params: Promise<{ id: string }> }) {
           <TitleWrapper title="Update Product Category" />
 
           <div>
-            <CustomForm onSubmit={onSubmit}>
+            <CustomForm
+              onSubmit={onSubmit}
+              defaultValues={{
+                name: productById?.data?.name,
+                category: productById?.data?.category?._id || "",
+              }}
+            >
               <div className="flex flex-col gap-4">
                 <CustomInput
                   type="text"
