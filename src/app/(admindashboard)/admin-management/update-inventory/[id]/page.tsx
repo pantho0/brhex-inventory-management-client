@@ -1,6 +1,9 @@
 "use client";
 import React from "react";
-import { useGetInventoryItemBySerialNumber } from "@/hooks/inventory.hook";
+import {
+  useGetInventoryItemBySerialNumber,
+  useUpdateInventoryItem,
+} from "@/hooks/inventory.hook";
 import TitleWrapper from "@/components/adminDashboard/TitleWrapper";
 import CustomForm from "@/components/customform/CustomForm";
 import CustomSelect from "@/components/customform/CustomSelect";
@@ -8,17 +11,23 @@ import CustomInput from "@/components/customform/CustomInput";
 import { Button } from "@/components/ui/button";
 import { useGetAllProduct } from "@/hooks/product.hook";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 function UpdateInventory({ params }: { params: Promise<{ id: string }> }) {
   const { id } = React.use(params);
   const { data, isPending, isFetching } = useGetInventoryItemBySerialNumber(id);
   const { data: fetchedProducts, isLoading } = useGetAllProduct();
-
+  const { mutate: handleUpdateInventory, isPending: isUpdatePending } =
+    useUpdateInventoryItem();
+  const router = useRouter();
   const products = fetchedProducts?.data?.map((product: any) => ({
     key: product?._id,
     value: product?._id,
     label: product?.name?.toUpperCase(),
   }));
+
+  const updateDataId = data?.data?._id;
 
   const defaultValue = {
     product: data?.data?.product?._id,
@@ -26,8 +35,25 @@ function UpdateInventory({ params }: { params: Promise<{ id: string }> }) {
     price: data?.data?.price,
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FieldValues> = (updatedData) => {
+    const toastId = toast.loading("Updating inventory item...");
+    handleUpdateInventory(
+      { id: updateDataId, inventoryData: updatedData },
+      {
+        onSuccess: () => {
+          toast.success("Inventory item updated successfully", { id: toastId });
+          router.push("/admin-management/get-all-inventory");
+        },
+        onError: (error: any) => {
+          toast.error(
+            error.response?.data?.message ||
+              error.message ||
+              "Error updating inventory item",
+            { id: toastId }
+          );
+        },
+      }
+    );
   };
 
   if (isPending || isFetching) {
@@ -65,7 +91,7 @@ function UpdateInventory({ params }: { params: Promise<{ id: string }> }) {
               placeholder="Price"
             />
             <Button
-              disabled={isPending}
+              disabled={isPending || isUpdatePending}
               type="submit"
               className="bg-primary cursor-pointer"
             >
