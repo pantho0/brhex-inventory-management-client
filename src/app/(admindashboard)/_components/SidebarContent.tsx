@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut } from "lucide-react";
+import { LogOut, UserIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Logo from "../../../../public/images/logo.png";
@@ -156,6 +156,12 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
 
                 {/* Navigation */}
                 <nav className="space-y-4">
+                  <NavItem
+                    key={"/admin-management"}
+                    href={"/admin-management"}
+                    label="Admin Dashboard"
+                    icon={UserIcon}
+                  />
                   <Accordion type="multiple" className="w-full">
                     {/* Category Management */}
                     <AccordionItem value="category" className="border-b-0">
