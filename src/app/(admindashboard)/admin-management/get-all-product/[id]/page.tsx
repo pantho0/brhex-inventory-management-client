@@ -5,7 +5,7 @@ import CustomInput from "@/components/customform/CustomInput";
 import CustomSelect from "@/components/customform/CustomSelect";
 import { Button } from "@/components/ui/button";
 import { useGetCategory } from "@/hooks/category.hook";
-import { useGetProductById } from "@/hooks/product.hook";
+import { useGetProductById, useUpdateProduct } from "@/hooks/product.hook";
 import React from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
@@ -14,8 +14,10 @@ function UpdateProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = React.use(params);
   const { data: productById, isFetching: productByIdLoading } =
     useGetProductById(id);
-  console.log(productById);
+
   const { data: fetchedData, isFetching: categoryLoading } = useGetCategory();
+
+  const { mutate: updateProduct, isPending } = useUpdateProduct();
 
   const categories = fetchedData?.data?.map((cat: any) => ({
     key: cat?._id,
@@ -27,7 +29,23 @@ function UpdateProductPage({ params }: { params: Promise<{ id: string }> }) {
     if (!data.name || !data.category) {
       return toast.error("Please fill all the fields");
     }
-    console.log(data);
+    const toastId = toast.loading("Updating product...");
+    updateProduct(
+      { id, productData: data },
+      {
+        onSuccess: () => {
+          toast.success("Product updated successfully", { id: toastId });
+        },
+        onError: (error: any) => {
+          toast.error(
+            error.response?.data?.message ||
+              error.message ||
+              "Error updating product",
+            { id: toastId }
+          );
+        },
+      }
+    );
   };
   return (
     <div className="text-black font-sans px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
@@ -63,7 +81,7 @@ function UpdateProductPage({ params }: { params: Promise<{ id: string }> }) {
                 <Button
                   type="submit"
                   className="bg-primary cursor-pointer"
-                  disabled={false}
+                  disabled={isPending}
                 >
                   Update Product
                 </Button>
