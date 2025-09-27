@@ -16,10 +16,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { useCreateInvoice } from "@/hooks/invoice.hook";
+import { toast } from "sonner";
 
 export default function CreateInvoice() {
   const [cart, setCart] = useState<any[]>([]);
   const [manualSerial, setManualSerial] = useState("");
+  const { mutate: createInvoice, isPending } = useCreateInvoice();
 
   // Invoice fields
   const [invoiceNo, setInvoiceNo] = useState("INV-001");
@@ -96,6 +99,7 @@ export default function CreateInvoice() {
 
   // Submit invoice
   const handleSubmitInvoice = async () => {
+    const toastId = toast.loading("Creating Invoice...");
     const invoicePayload = {
       invoiceNo,
       customerName,
@@ -105,8 +109,22 @@ export default function CreateInvoice() {
       paidAmount: Number(paidAmount),
     };
 
-    console.log("Sending Invoice Payload:", invoicePayload);
-    // await createInvoice(invoicePayload) <-- your backend API call
+    createInvoice(invoicePayload, {
+      onSuccess: () => {
+        toast.success("Invoice created successfully", { id: toastId });
+        setCart([]);
+        setInvoiceNo("INV-001");
+        setCustomerName("");
+        setDiscount(0);
+        setTax(0);
+        setPaidAmount(0);
+      },
+      onError: (error) => {
+        toast.error(error?.message || "Failed to create invoice", {
+          id: toastId,
+        });
+      },
+    });
   };
 
   return (

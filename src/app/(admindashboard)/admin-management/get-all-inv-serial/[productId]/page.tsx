@@ -1,6 +1,7 @@
 "use client";
 import TitleWrapper from "@/components/adminDashboard/TitleWrapper";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -44,6 +45,7 @@ const GetAllInvByProductSerial = ({
             <TableRow>
               <TableHead>SL No.</TableHead>
               <TableHead>Category</TableHead>
+              <TableHead>Status</TableHead>
               <TableHead>Price</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -56,6 +58,22 @@ const GetAllInvByProductSerial = ({
                 </TableCell>
                 <TableCell className="font-medium text-black">
                   {product?.product?.category?.name?.toUpperCase()}
+                </TableCell>
+                <TableCell>
+                  <Badge
+                    variant={
+                      product?.status?.toLowerCase() === "in_stock"
+                        ? "default"
+                        : "secondary"
+                    }
+                    className={
+                      product?.status?.toLowerCase() === "in_stock"
+                        ? "bg-green-700 hover:bg-green-700/90 text-white"
+                        : "bg-yellow-200 hover:bg-yellow-200/90 text-yellow-900"
+                    }
+                  >
+                    {product?.status?.toUpperCase()}
+                  </Badge>
                 </TableCell>
                 <TableCell className="font-medium text-black">
                   {product?.price}
