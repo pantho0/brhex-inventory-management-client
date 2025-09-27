@@ -14,6 +14,7 @@ import { useReactToPrint } from "react-to-print";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import { numberToWords } from "@/utils/helperFunctions";
+import { POSReceipt } from "./PosReceipt";
 import Logo from "../../../../../public/images/logo.jpg";
 
 const logo = Logo;
@@ -23,17 +24,27 @@ interface InvoiceModalProps {
 }
 
 const InvoiceModal: React.FC<InvoiceModalProps> = ({ invoice }) => {
-  const printRef = useRef<HTMLDivElement>(null);
+  const a4PrintRef = useRef<HTMLDivElement>(null);
+  const posPrintRef = useRef<HTMLDivElement>(null); // Ref for the POS component
 
-  const handlePrint = useReactToPrint({
-    contentRef: printRef,
+  // --- A4 Printing Hook ---
+  const handleA4Print = useReactToPrint({
+    contentRef: a4PrintRef,
     documentTitle: `Invoice-${invoice?.invoiceNo || "Unknown"}`,
+  });
+
+  // --- POS Printing Hook ---
+  const handlePosPrint = useReactToPrint({
+    contentRef: posPrintRef,
+    documentTitle: `Receipt-${invoice?.invoiceNo || "Unknown"}`,
   });
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">View Invoice</Button>
+        <Button variant="default" className="cursor-pointer">
+          View
+        </Button>
       </DialogTrigger>
 
       <DialogContent className="max-w-5xl bg-white overflow-y-auto max-h-[90vh]">
@@ -41,11 +52,12 @@ const InvoiceModal: React.FC<InvoiceModalProps> = ({ invoice }) => {
           <DialogTitle>Invoice Preview</DialogTitle>
         </DialogHeader>
 
-        <div id="printable-area" ref={printRef}>
+        {/* --- A4 Layout (Visible in Modal) --- */}
+        <div id="printable-area" ref={a4PrintRef}>
           <div className="invoice-box text-black">
             {/* --- Top Section --- */}
             <div>
-              <div className="flex flex-row items-center justify-center text-center gap-4">
+              <div className="flex flex-row items-center justify-center text-center gap-2">
                 <Image
                   src={logo}
                   alt="Logo"
@@ -161,17 +173,28 @@ const InvoiceModal: React.FC<InvoiceModalProps> = ({ invoice }) => {
                   )}
                 </div>
               </div>
+              <p className="text-[11px] mt-2 text-black">
+                N.B.: Warranty covers manufacturing defects only; physical
+                damage, fungus, burn, or misuse is excluded. Product and
+                original invoice required for all warranty claims.
+              </p>
             </div>
-            <p className="text-[11px] mt-2 text-black">
-              N.B.: Warranty covers manufacturing defects only; physical damage,
-              fungus, burn, or misuse is excluded. Product and original invoice
-              required for all warranty claims.
-            </p>
           </div>
         </div>
 
+        {/* --- POS Layout (Hidden, for printing only) --- */}
+        <div className="hidden">
+          <div id="pos-receipt-printable">
+            <POSReceipt invoice={invoice} ref={posPrintRef} />
+          </div>
+        </div>
+
+        {/* --- Action Buttons --- */}
         <div className="flex justify-end gap-2 mt-4">
-          <Button onClick={handlePrint}>Print Invoice</Button>
+          <Button onClick={handleA4Print}>Print A4</Button>
+          <Button onClick={handlePosPrint} variant="secondary">
+            Print POS
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

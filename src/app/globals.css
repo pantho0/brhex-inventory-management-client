@@ -192,3 +192,27 @@ body {
     flex-direction: column;
   }
 }
+
+
+@media print {
+  body.printing-pos * {
+    visibility: hidden;
+  }
+
+  body.printing-pos #pos-receipt-printable,
+  body.printing-pos #pos-receipt-printable * {
+    visibility: visible;
+  }
+
+  body.printing-pos #pos-receipt-printable {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  @page {
+    size: 80mm auto; /* Set paper size for standard thermal printers */
+    margin: 0.1in;
+  }
+}
