@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { InvoiceModal } from "../../_components/invoice_modal/InvoiceModal";
+import InvoiceModal from "../../_components/invoice_modal/InvoiceModal";
 
 function GetAllInvoicePage() {
   const { data: fetchedInvoices, isPending } = useGetAllInvoice();
@@ -116,7 +116,7 @@ function GetAllInvoicePage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <InvoiceModal inv={inv._id} />
+                      <InvoiceModal invoice={inv} />
                     </TableCell>
                   </TableRow>
                 );

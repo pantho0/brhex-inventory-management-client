@@ -22,11 +22,14 @@ import { toast } from "sonner";
 export default function CreateInvoice() {
   const [cart, setCart] = useState<any[]>([]);
   const [manualSerial, setManualSerial] = useState("");
+
   const { mutate: createInvoice, isPending } = useCreateInvoice();
 
   // Invoice fields
   const [invoiceNo, setInvoiceNo] = useState("INV-001");
   const [customerName, setCustomerName] = useState("");
+  const [address, setAddress] = useState("");
+  const [mobile, setMobile] = useState("");
   const [discount, setDiscount] = useState(0);
   const [tax, setTax] = useState(0);
   const [paidAmount, setPaidAmount] = useState(0);
@@ -103,6 +106,8 @@ export default function CreateInvoice() {
     const invoicePayload = {
       invoiceNo,
       customerName,
+      address,
+      mobile,
       items: cart,
       discount: Number(discount),
       tax: Number(tax),
@@ -150,6 +155,24 @@ export default function CreateInvoice() {
             value={customerName}
             onChange={(e) => setCustomerName(e.target.value)}
             placeholder="Customer Name"
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="address">Address</Label>
+          <Input
+            id="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="Address"
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="mobile">Mobile</Label>
+          <Input
+            id="mobile"
+            value={mobile}
+            onChange={(e) => setMobile(e.target.value)}
+            placeholder="Mobile"
           />
         </div>
 
