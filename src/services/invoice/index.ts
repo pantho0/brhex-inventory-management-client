@@ -34,3 +34,19 @@ export const getAllInvoice = async () => {
     );
   }
 };
+
+export const getInvoiceById = async (id: string) => {
+  try {
+    const res = await axiosInstance.get(`/invoice/${id}`);
+    if (!res.data.success) {
+      throw new Error(res.data.message || "Error getting invoice by id");
+    }
+    return res.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message ||
+        error.message ||
+        "Error getting invoice by id"
+    );
+  }
+};
