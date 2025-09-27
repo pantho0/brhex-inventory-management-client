@@ -19,10 +19,9 @@ export const useGetAllInvoice = () => {
   });
 };
 
-export const useGetInvoiceById = (id: string) => {
-  return useQuery({
-    queryKey: ["get-invoice-by-id"],
-    queryFn: async () => await getInvoiceById(id),
-    enabled: !!id,
+export const useGetInvoiceById = () => {
+  return useMutation({
+    mutationKey: ["get-invoice-by-id"],
+    mutationFn: async (id: string) => await getInvoiceById(id),
   });
 };

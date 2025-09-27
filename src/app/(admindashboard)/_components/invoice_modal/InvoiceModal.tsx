@@ -11,10 +11,16 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useGetInvoiceById } from "@/hooks/invoice.hook";
 
 export function InvoiceModal({ inv }: { inv: string }) {
+  const { mutate: handleGetInvoice, data: fetchecdInvoice } =
+    useGetInvoiceById();
+
+  console.log(fetchecdInvoice?.data);
+
   const handlePrint = (data: any) => {
-    console.log(data);
+    handleGetInvoice(data);
   };
 
   return (
