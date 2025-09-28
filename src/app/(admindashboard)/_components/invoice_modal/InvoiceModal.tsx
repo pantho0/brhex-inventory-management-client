@@ -134,7 +134,19 @@ const InvoiceModal: React.FC<InvoiceModalProps> = ({ invoice }) => {
 
               <Separator className="my-4 bg-black" />
 
-              <div className="flex justify-end mt-2">
+              <div className="flex justify-between mt-2">
+                <div className="flex flex-col gap-16 items-end mt-8 text-sm">
+                  <div className="text-center">
+                    <div className="border-t border-black w-48 pt-1 font-semibold">
+                      Customer&apos;s Signature
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="border-t border-black w-48 pt-1 font-semibold">
+                      Seller&apos;s Signature
+                    </div>
+                  </div>
+                </div>
                 <div className="w-full max-w-sm space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="font-semibold">Subtotal:</span>

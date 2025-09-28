@@ -9,17 +9,17 @@ export function useBarcodeScanner(onScan: (code: string) => void) {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Enter") {
         if (buffer.length > 0) {
-          onScan(buffer); // send scanned code
+          onScan(buffer.trim()); // ✅ send scanned code
           setBuffer(""); // reset buffer
         }
-      } else {
-        // add typed char to buffer
+      } else if (e.key.length === 1) {
+        // only add printable characters
         setBuffer((prev) => prev + e.key);
-
-        // reset if no activity (e.g. 200ms gap → new scan)
-        clearTimeout(timeout);
-        timeout = setTimeout(() => setBuffer(""), 200);
       }
+
+      // reset if no activity (scanner always types super fast)
+      clearTimeout(timeout);
+      timeout = setTimeout(() => setBuffer(""), 100); // shorter delay
     };
 
     window.addEventListener("keydown", handleKeyDown);

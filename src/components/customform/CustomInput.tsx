@@ -10,6 +10,7 @@ interface CustomInputProps {
   label: ReactNode;
   defaultValue?: string;
   disabled?: boolean;
+  required?: boolean;
   fontColor?: string;
 }
 
@@ -20,6 +21,7 @@ function CustomInput({
   label,
   defaultValue = "",
   disabled,
+  required,
   fontColor = "text-black",
 }: CustomInputProps) {
   const {
@@ -45,7 +47,7 @@ function CustomInput({
               type={type}
               placeholder={placeholder}
               className="w-full"
-              required
+              required={required}
               {...field}
               disabled={disabled}
             />

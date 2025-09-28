@@ -4,7 +4,7 @@ import axiosInstance from "@/lib/AxiosInstance";
 export const addInventoryItem = async (inventoryData: any) => {
   try {
     const res = await axiosInstance.post(
-      "/inventory/add-inventory-item",
+      "/inventory/bulk-add-inventory-items",
       inventoryData
     );
     if (!res.data.success) {
