@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useCreateInvoice } from "@/hooks/invoice.hook";
 import { toast } from "sonner";
+import { generateInvoiceNo } from "@/utils/helperFunctions";
 
 export default function CreateInvoice() {
   const [cart, setCart] = useState<any[]>([]);
@@ -25,8 +26,9 @@ export default function CreateInvoice() {
 
   const { mutate: createInvoice, isPending } = useCreateInvoice();
 
+  const invoiceNo = generateInvoiceNo("BCC");
+
   // Invoice fields
-  const [invoiceNo, setInvoiceNo] = useState("INV-001");
   const [customerName, setCustomerName] = useState("");
   const [address, setAddress] = useState("");
   const [mobile, setMobile] = useState("");
@@ -37,21 +39,27 @@ export default function CreateInvoice() {
   // Add product to cart
   const addToCart = async (code: string) => {
     try {
-      const res = await getInventoryItemBySerialNumber(code);
+      const toastId = toast.loading("Adding Product...");
+      const res = await getInventoryItemBySerialNumber(code.toLowerCase());
 
       if (res?.success && res?.data) {
         const product = res.data;
 
         if (product.status !== "in_stock") {
-          alert(`Serial ${product.serialNumber} is not in stock`);
+          toast.error(`Serial ${product.serialNumber} is not in stock`, {
+            id: toastId,
+          });
           return;
         }
 
         setCart((prev) => {
           if (prev.find((item) => item.serialNumber === product.serialNumber)) {
-            alert(`Serial ${product.serialNumber} already in cart`);
+            toast.error(`Serial ${product.serialNumber} already in cart`, {
+              id: toastId,
+            });
             return prev;
           }
+          toast.success("Product added to cart", { id: toastId });
           return [
             ...prev,
             {
@@ -63,7 +71,7 @@ export default function CreateInvoice() {
           ];
         });
       } else {
-        alert(`Product ${code} not found`);
+        toast.error(`Product ${code} not found`, { id: toastId });
       }
     } catch (err) {
       console.error("Error adding product:", err);
@@ -80,7 +88,7 @@ export default function CreateInvoice() {
   const handleManualAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!manualSerial.trim()) return;
-    await addToCart(manualSerial.trim());
+    await addToCart(manualSerial.trim().toLowerCase());
     setManualSerial("");
   };
 
@@ -118,7 +126,6 @@ export default function CreateInvoice() {
       onSuccess: () => {
         toast.success("Invoice created successfully", { id: toastId });
         setCart([]);
-        setInvoiceNo("INV-001");
         setCustomerName("");
         setDiscount(0);
         setTax(0);
@@ -143,7 +150,7 @@ export default function CreateInvoice() {
           <Input
             id="invoiceNo"
             value={invoiceNo}
-            onChange={(e) => setInvoiceNo(e.target.value)}
+            disabled
             placeholder="Invoice No"
           />
         </div>
