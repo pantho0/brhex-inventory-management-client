@@ -50,3 +50,19 @@ export const getInvoiceById = async (id: string) => {
     );
   }
 };
+
+export const salesSummary = async (periodsData: any) => {
+  try {
+    const res = await axiosInstance.post("/invoice/sales-summary", periodsData);
+    if (!res.data.success) {
+      throw new Error(res.data.message || "Error getting sales summary");
+    }
+    return res.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message ||
+        error.message ||
+        "Error getting sales summary"
+    );
+  }
+};
