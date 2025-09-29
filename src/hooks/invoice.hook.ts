@@ -3,8 +3,9 @@ import {
   getAllInvoice,
   getInvoiceById,
   salesSummary,
+  updatePayment,
 } from "@/services/invoice";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useCreateInvoice = () => {
   return useMutation({
@@ -13,11 +14,10 @@ export const useCreateInvoice = () => {
   });
 };
 
-export const useGetAllInvoice = () => {
-  return useMutation({
-    mutationKey: ["get-all-invoice"],
-    mutationFn: async (query: Record<string, unknown>) =>
-      await getAllInvoice(query),
+export const useGetAllInvoice = (queryParams: Record<string, unknown> = {}) => {
+  return useQuery({
+    queryKey: ["get-all-invoice", queryParams], // query key includes params
+    queryFn: () => getAllInvoice(queryParams),
   });
 };
 
@@ -32,5 +32,23 @@ export const useSalesSummary = () => {
   return useMutation({
     mutationKey: ["sales-summary"],
     mutationFn: async (periodsData: any) => await salesSummary(periodsData),
+  });
+};
+
+export const useUpdatePayment = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      invoiceID,
+      paymentData,
+    }: {
+      invoiceID: string;
+      paymentData: any;
+    }) => updatePayment(invoiceID, paymentData),
+    onSuccess: () => {
+      // Invalidate the cached invoice list so it refetches
+      queryClient.invalidateQueries({ queryKey: ["get-all-invoice"] });
+    },
   });
 };

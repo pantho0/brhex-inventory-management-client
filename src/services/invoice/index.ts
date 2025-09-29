@@ -66,3 +66,21 @@ export const salesSummary = async (periodsData: any) => {
     );
   }
 };
+
+export const updatePayment = async (invoiceID: string, paymentData: any) => {
+  try {
+    const res = await axiosInstance.put(
+      `/invoice/payment/${invoiceID}`,
+      paymentData
+    );
+    if (!res.data.success) {
+      throw new Error(res.data.message || "Error updating payment");
+    }
+
+    return res.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || error.message || "Error updating payment"
+    );
+  }
+};

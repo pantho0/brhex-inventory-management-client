@@ -5,26 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useGetAllInvoice } from "@/hooks/invoice.hook";
+import UpdatePaymentModal from "../../_components/update-payment-modal/page";
 
 export default function UpdatePaymentPage() {
   const [invoiceNo, setInvoiceNo] = useState("");
   const [query, setQuery] = useState<Record<string, unknown>>({});
-  const {
-    mutate: handleGetAllInvoice,
-    data: fetchedInvoices,
-    isPending,
-  } = useGetAllInvoice();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data: fetchedInvoices, isPending } = useGetAllInvoice(query);
 
   const invoice =
     fetchedInvoices?.data?.result && fetchedInvoices.data.result.length > 0
       ? fetchedInvoices.data.result[0]
       : null;
 
-  useEffect(() => {
-    if (query.searchTerm) {
-      handleGetAllInvoice(query);
-    }
-  }, [query, handleGetAllInvoice]);
+  console.log(invoice);
 
   const handleSearch = () => {
     if (invoiceNo.trim()) {
@@ -122,8 +116,21 @@ export default function UpdatePaymentPage() {
             )}
 
             {/* Update Payment Action */}
-            <div className="mt-6">
-              <Button className="w-full cursor-pointer">Update Payment</Button>
+            <div className="mt-6 flex justify-center">
+              {invoice?.paymentStatus === "paid" ? (
+                <Button className="bg-accent" disabled>
+                  Already Paid
+                </Button>
+              ) : (
+                <Button onClick={() => setIsModalOpen(true)}>
+                  Update Payment
+                </Button>
+              )}
+              <UpdatePaymentModal
+                invoiceID={invoice?._id as string}
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+              />
             </div>
           </CardContent>
         </Card>

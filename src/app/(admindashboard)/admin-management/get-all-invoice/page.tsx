@@ -35,19 +35,10 @@ function GetAllInvoicePage() {
   const [query, setQuery] = useState<Record<string, unknown>>({});
   console.log(query);
 
-  const {
-    mutate: handleGetAllInvoice,
-    data: fetchedInvoices,
-    isPending,
-  } = useGetAllInvoice();
+  const { data: fetchedInvoices, isPending } = useGetAllInvoice(query);
 
   const invoices = fetchedInvoices?.data?.result;
   const meta = fetchedInvoices?.data?.meta;
-  console.log(meta);
-
-  useEffect(() => {
-    handleGetAllInvoice(query);
-  }, [handleGetAllInvoice, query]);
 
   return (
     <div className="text-black font-sans px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
