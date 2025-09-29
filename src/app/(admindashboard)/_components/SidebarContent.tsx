@@ -162,6 +162,18 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
                     label="Admin Dashboard"
                     icon={UserIcon}
                   />
+                  <NavItem
+                    key={"/admin-management/show-inventory"}
+                    href={"/admin-management/show-inventory"}
+                    label="View Inventory"
+                    icon={UserIcon}
+                  />
+                  <NavItem
+                    key={"/admin-management/create-invoice"}
+                    href={"/admin-management/create-invoice"}
+                    label="Create Invoice"
+                    icon={UserIcon}
+                  />
                   <Accordion type="multiple" className="w-full">
                     {/* Category Management */}
                     <AccordionItem value="category" className="border-b-0">

@@ -5,6 +5,7 @@ import {
   getAllInventoryItemsByProductId,
   getInventoryItemBySerialNumber,
   updateInventoryItem,
+  viewInventory,
 } from "../services/inventory";
 
 export const useAddInventoryItem = () => {
@@ -40,5 +41,12 @@ export const useUpdateInventoryItem = () => {
     mutationKey: ["update-inventory-item"],
     mutationFn: ({ id, inventoryData }: any) =>
       updateInventoryItem(id, inventoryData),
+  });
+};
+
+export const useViewInventory = () => {
+  return useQuery({
+    queryKey: ["view-inventory"],
+    queryFn: () => viewInventory(),
   });
 };

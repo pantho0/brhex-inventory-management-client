@@ -88,3 +88,19 @@ export const updateInventoryItem = async (id: string, inventoryData: any) => {
     );
   }
 };
+
+export const viewInventory = async () => {
+  try {
+    const res = await axiosInstance.get("/inventory/show-inventory");
+    if (!res.data.success) {
+      throw new Error(res.data.message || "Error getting inventory items");
+    }
+    return res.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message ||
+        error.message ||
+        "Error getting inventory items"
+    );
+  }
+};
