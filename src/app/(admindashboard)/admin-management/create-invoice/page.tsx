@@ -26,7 +26,7 @@ export default function CreateInvoice() {
 
   const { mutate: createInvoice, isPending } = useCreateInvoice();
 
-  const invoiceNo = generateInvoiceNo("BCC");
+  const invoiceNo = generateInvoiceNo("BCC").toString().toUpperCase();
 
   // Invoice fields
   const [customerName, setCustomerName] = useState("");
