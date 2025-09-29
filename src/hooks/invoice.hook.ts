@@ -4,7 +4,7 @@ import {
   getInvoiceById,
   salesSummary,
 } from "@/services/invoice";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 export const useCreateInvoice = () => {
   return useMutation({
@@ -14,9 +14,10 @@ export const useCreateInvoice = () => {
 };
 
 export const useGetAllInvoice = () => {
-  return useQuery({
-    queryKey: ["get-all-invoice"],
-    queryFn: async () => await getAllInvoice(),
+  return useMutation({
+    mutationKey: ["get-all-invoice"],
+    mutationFn: async (query: Record<string, unknown>) =>
+      await getAllInvoice(query),
   });
 };
 

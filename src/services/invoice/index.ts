@@ -19,9 +19,9 @@ export const createInvoice = async (invoiceData: any) => {
   }
 };
 
-export const getAllInvoice = async () => {
+export const getAllInvoice = async (query: Record<string, unknown>) => {
   try {
-    const res = await axiosInstance.get("/invoice");
+    const res = await axiosInstance.get("/invoice", { params: query });
     if (!res.data.success) {
       throw new Error(res.data.message || "Error getting all invoice");
     }

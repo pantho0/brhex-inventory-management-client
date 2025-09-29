@@ -1,7 +1,7 @@
 "use client";
 import TitleWrapper from "@/components/adminDashboard/TitleWrapper";
 import { useGetAllInvoice } from "@/hooks/invoice.hook";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -13,15 +13,33 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import InvoiceModal from "../../_components/invoice_modal/InvoiceModal";
+import { Input } from "@/components/ui/input";
 
 function GetAllInvoicePage() {
-  const { data: fetchedInvoices, isPending } = useGetAllInvoice();
+  const [query, setQuery] = useState<Record<string, unknown>>({});
 
-  const invoices = fetchedInvoices?.data;
+  const {
+    mutate: handleGetAllInvoice,
+    data: fetchedInvoices,
+    isPending,
+  } = useGetAllInvoice();
+
+  const invoices = fetchedInvoices?.data?.result;
+
+  useEffect(() => {
+    handleGetAllInvoice(query);
+  }, [handleGetAllInvoice, query]);
 
   return (
     <div className="text-black font-sans px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
       <TitleWrapper title="All Invoices" />
+      <div>
+        <Input
+          type="text"
+          placeholder="Search invoice..."
+          onChange={(e) => setQuery({ ...query, searchTerm: e.target.value })}
+        />
+      </div>
       {isPending ? (
         <div className="text-center py-10 text-lg font-semibold text-gray-600">
           Loading...
