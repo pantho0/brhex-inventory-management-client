@@ -26,7 +26,9 @@ import { Button } from "@/components/ui/button";
 import PaginationComponent from "../../_components/pagination/PaginationComponent";
 
 function GetAllInvoicePage() {
-  const [query, setQuery] = useState<Record<string, unknown>>({});
+  const [query, setQuery] = useState<{ page: number } & Record<string, unknown>>({
+    page: 1,
+  });
   console.log(query);
 
   const { data: fetchedInvoices, isPending } = useGetAllInvoice(query);
@@ -48,7 +50,11 @@ function GetAllInvoicePage() {
             placeholder="Search invoice..."
             defaultValue="BCC-INV"
             onChange={(e) =>
-              setQuery({ ...query, searchTerm: e.target.value.toUpperCase() })
+              setQuery({
+                ...query,
+                page: 1,
+                searchTerm: e.target.value.toUpperCase(),
+              })
             }
           />
         </div>
@@ -62,6 +68,7 @@ function GetAllInvoicePage() {
               onValueChange={(value) =>
                 setQuery({
                   ...query,
+                  page: 1,
                   paymentStatus:
                     value === "all" ? undefined : value.toLowerCase(),
                 })
@@ -84,7 +91,7 @@ function GetAllInvoicePage() {
               size="sm"
               className="mt-6 h-10 px-4 bg-red-500 text-white hover:bg-red-600 cursor-pointer"
               onClick={() => {
-                setQuery({});
+                setQuery({ page: 1 });
               }}
             >
               Reset Filters

@@ -24,7 +24,7 @@ export default function CreateInvoice() {
   const [cart, setCart] = useState<any[]>([]);
   const [manualSerial, setManualSerial] = useState("");
 
-  const { mutate: createInvoice, isPending } = useCreateInvoice();
+  const { mutate: createInvoice } = useCreateInvoice();
 
   const invoiceNo = generateInvoiceNo("BCC").toString().toUpperCase();
 

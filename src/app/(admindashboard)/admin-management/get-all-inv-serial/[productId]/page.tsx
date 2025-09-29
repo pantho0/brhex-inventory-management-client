@@ -150,7 +150,7 @@ const GetAllInvByProductSerial = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {paginatedProducts.map((item, idx) => (
+          {paginatedProducts.map((item) => (
             <TableRow key={item._id}>
               <TableCell className="font-medium text-black">
                 {item.serialNumber?.toUpperCase()}
