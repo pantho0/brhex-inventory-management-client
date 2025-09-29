@@ -39,9 +39,11 @@ export const getAllInventoryItems = async () => {
 export const getAllInventoryItemsByProductId = async (productId: string) => {
   try {
     const res = await axiosInstance.get(`/inventory/product/${productId}`);
+
     if (!res.data.success) {
       throw new Error(res.data.message || "Error getting inventory items");
     }
+
     return res.data;
   } catch (error: any) {
     throw new Error(

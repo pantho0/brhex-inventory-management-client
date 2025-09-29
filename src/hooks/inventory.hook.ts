@@ -23,7 +23,7 @@ export const useGetAllInventoryItems = () => {
 
 export const useGetAllInventoryItemsByProductId = (productId: string) => {
   return useQuery({
-    queryKey: ["get-all-inventory-items-by-product-id"],
+    queryKey: ["get-all-inventory-items-by-product-id", productId],
     queryFn: () => getAllInventoryItemsByProductId(productId),
   });
 };

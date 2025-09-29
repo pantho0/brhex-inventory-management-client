@@ -9,10 +9,14 @@ import {
 } from "@/components/ui/pagination";
 import React from "react";
 
+type Meta = { page: number; totalPage: number; limit: number };
+type Query = { page: number } & Record<string, unknown>;
+type SetQuery = (q: Query) => void;
+
 type PaginationProps = {
-  meta: any;
-  query: any;
-  setQuery: React.Dispatch<React.SetStateAction<Record<string, unknown>>>;
+  meta: Meta;
+  query: Query;
+  setQuery: SetQuery;
 };
 
 function PaginationComponent({ meta, query, setQuery }: PaginationProps) {
