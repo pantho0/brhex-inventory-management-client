@@ -14,9 +14,17 @@ import {
 } from "@/components/ui/table";
 import InvoiceModal from "../../_components/invoice_modal/InvoiceModal";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 function GetAllInvoicePage() {
   const [query, setQuery] = useState<Record<string, unknown>>({});
+  console.log(query);
 
   const {
     mutate: handleGetAllInvoice,
@@ -33,12 +41,48 @@ function GetAllInvoicePage() {
   return (
     <div className="text-black font-sans px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
       <TitleWrapper title="All Invoices" />
-      <div>
-        <Input
-          type="text"
-          placeholder="Search invoice..."
-          onChange={(e) => setQuery({ ...query, searchTerm: e.target.value })}
-        />
+      <div className="flex gap-2 justify-between">
+        <div className="w-full">
+          <label htmlFor="search" className="text-gray-600">
+            Search
+          </label>
+          <Input
+            type="text"
+            className="w-full"
+            placeholder="Search invoice..."
+            defaultValue="BCC-INV"
+            onChange={(e) =>
+              setQuery({ ...query, searchTerm: e.target.value.toUpperCase() })
+            }
+          />
+        </div>
+        <div className="w-[25%]">
+          <div>
+            <label htmlFor="status" className="text-gray-600">
+              Status
+            </label>
+            <Select
+              defaultValue="BCC-INV"
+              onValueChange={(value) =>
+                setQuery({
+                  ...query,
+                  paymentStatus:
+                    value === "all" ? undefined : value.toLowerCase(),
+                })
+              }
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All</SelectItem>
+                <SelectItem value="paid">Paid</SelectItem>
+                <SelectItem value="partial">Partial</SelectItem>
+                <SelectItem value="due">Due</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
       </div>
       {isPending ? (
         <div className="text-center py-10 text-lg font-semibold text-gray-600">
