@@ -1,7 +1,7 @@
 "use client";
 import TitleWrapper from "@/components/adminDashboard/TitleWrapper";
 import { useGetAllInvoice } from "@/hooks/invoice.hook";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -21,15 +21,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+
 import { Button } from "@/components/ui/button";
+import PaginationComponent from "../../_components/pagination/PaginationComponent";
 
 function GetAllInvoicePage() {
   const [query, setQuery] = useState<Record<string, unknown>>({});
@@ -199,76 +193,13 @@ function GetAllInvoicePage() {
               })}
             </TableBody>
           </Table>
-          {meta && meta.totalPage > 1 && (
-            <div className="mt-6 flex justify-center">
-              <Pagination>
-                <PaginationContent>
-                  {/* Previous Button */}
-                  <PaginationItem>
-                    <PaginationPrevious
-                      href="#"
-                      onClick={() =>
-                        setQuery({
-                          ...query,
-                          page: Math.max(1, (meta.page as number) - 1),
-                          limit: meta.limit,
-                        })
-                      }
-                      className={`rounded-md px-3 py-1 bg-primary text-white hover:bg-primary/90 ${
-                        meta.page === 1 ? "pointer-events-none opacity-50" : ""
-                      }`}
-                    />
-                  </PaginationItem>
-
-                  {/* Page Numbers */}
-                  {[...Array(meta.totalPage)].map((_, i) => (
-                    <PaginationItem key={i}>
-                      <PaginationLink
-                        href="#"
-                        isActive={meta.page === i + 1}
-                        onClick={() =>
-                          setQuery({
-                            ...query,
-                            page: i + 1,
-                            limit: meta.limit,
-                          })
-                        }
-                        className={`rounded-md px-3 py-1 text-white ${
-                          meta.page === i + 1
-                            ? "bg-accent hover:bg-accent/90"
-                            : "bg-primary hover:bg-primary/90"
-                        }`}
-                      >
-                        {i + 1}
-                      </PaginationLink>
-                    </PaginationItem>
-                  ))}
-
-                  {/* Next Button */}
-                  <PaginationItem>
-                    <PaginationNext
-                      href="#"
-                      onClick={() =>
-                        setQuery({
-                          ...query,
-                          page: Math.min(
-                            meta.totalPage,
-                            (meta.page as number) + 1
-                          ),
-                          limit: meta.limit,
-                        })
-                      }
-                      className={`rounded-md px-3 py-1 bg-primary text-white hover:bg-primary/90 ${
-                        meta.page === meta.totalPage
-                          ? "pointer-events-none opacity-50"
-                          : ""
-                      }`}
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-            </div>
-          )}
+          <div>
+            <PaginationComponent
+              meta={meta}
+              query={query}
+              setQuery={setQuery}
+            />
+          </div>
         </div>
       )}
     </div>
