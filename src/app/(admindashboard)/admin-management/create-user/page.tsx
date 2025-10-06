@@ -18,7 +18,7 @@ function CreateUserPage() {
         toast.success("User Created Successfully", { id: toastId });
       },
       onError: (error: any) => {
-        toast.error(error?.response?.data?.message || "Failed to create user", {
+        toast.error(error?.message || "Failed to create user", {
           id: toastId,
         });
       },
