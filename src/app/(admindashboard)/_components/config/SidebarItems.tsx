@@ -73,6 +73,11 @@ export const sidebarAdminNavItems: NavSection = {
       icon: User,
     },
     {
+      href: "/admin-management/create-user",
+      label: "Create User",
+      icon: UserCog,
+    },
+    {
       href: "/admin-management/user-management",
       label: "User Management",
       icon: UserCog,
