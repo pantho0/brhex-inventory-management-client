@@ -3,11 +3,26 @@ import TitleWrapper from "@/components/adminDashboard/TitleWrapper";
 import CustomForm from "@/components/customform/CustomForm";
 import CustomInput from "@/components/customform/CustomInput";
 import { Button } from "@/components/ui/button";
+import { useAddUser } from "@/hooks/user.hook";
 import React from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 
 function CreateUserPage() {
+  const { mutate: handleCreateUser, isPending } = useAddUser();
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const toastId = toast.loading("Creating User...");
+    handleCreateUser(data, {
+      onSuccess: () => {
+        toast.success("User Created Successfully", { id: toastId });
+      },
+      onError: (error: any) => {
+        toast.error(error?.response?.data?.message || "Failed to create user", {
+          id: toastId,
+        });
+      },
+    });
     console.log(data);
   };
   return (
@@ -50,7 +65,12 @@ function CreateUserPage() {
             </div>
           </div>
           <div className="flex justify-center mt-3 w-full">
-            <Button size="lg" className="w-full cursor-pointer" type="submit">
+            <Button
+              disabled={isPending}
+              size="lg"
+              className="w-full cursor-pointer"
+              type="submit"
+            >
               Create User
             </Button>
           </div>

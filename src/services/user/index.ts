@@ -1,6 +1,7 @@
 "use server";
 
 import axiosInstance from "@/lib/AxiosInstance";
+import { cookies } from "next/headers";
 
 export const getAllUser = async () => {
   try {
@@ -32,7 +33,11 @@ export const getSingleUser = async (id: string) => {
 
 export const addUser = async (user: any) => {
   try {
-    const response = await axiosInstance.post("/users", user);
+    const response = await axiosInstance.post("/user/create-user", user, {
+      headers: {
+        Authorization: `${(await cookies()).get("accessToken")?.value}`,
+      },
+    });
     if (!response.data.success) {
       throw new Error(response.data.message || "Error adding user");
     }
