@@ -5,7 +5,11 @@ import { cookies } from "next/headers";
 
 export const getAllUser = async () => {
   try {
-    const response = await axiosInstance.get("/users");
+    const response = await axiosInstance.get("/user", {
+      headers: {
+        Authorization: `${(await cookies()).get("accessToken")?.value}`,
+      },
+    });
     if (!response.data.success) {
       throw new Error(response.data.message || "Error fetching users");
     }
