@@ -40,7 +40,7 @@ export default function CreateInvoice() {
   const addToCart = async (code: string) => {
     try {
       const toastId = toast.loading("Adding Product...");
-      const res = await getInventoryItemBySerialNumber(code.toLowerCase());
+      const res = await getInventoryItemBySerialNumber(code);
 
       if (res?.success && res?.data) {
         const product = res.data;
@@ -88,7 +88,7 @@ export default function CreateInvoice() {
   const handleManualAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!manualSerial.trim()) return;
-    await addToCart(manualSerial.trim().toLowerCase());
+    await addToCart(manualSerial.trim());
     setManualSerial("");
   };
 

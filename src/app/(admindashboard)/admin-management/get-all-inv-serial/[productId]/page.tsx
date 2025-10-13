@@ -43,8 +43,10 @@ const GetAllInvByProductSerial = ({
     useGetAllInventoryItemsByProductId(productId);
 
   const products = useMemo(() => data?.data ?? [], [data?.data]);
-
+ 
+ 
   const productName = products?.[0]?.product?.name || "";
+
 
   // Filtered & searched products
   const filteredProducts = useMemo(() => {
