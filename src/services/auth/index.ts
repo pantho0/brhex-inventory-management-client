@@ -49,3 +49,38 @@ export const getCurrentUser = async () => {
     exp: decodedToken?.exp,
   };
 };
+
+export async function clearAuthCookies() {
+  (await cookies()).set("accessToken", "", { expires: new Date(0), path: "/" });
+  (await cookies()).set("refreshToken", "", {
+    expires: new Date(0),
+    path: "/",
+  });
+}
+
+
+
+export const upDatePassword = async (updatedCredentials: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.put(
+      "/auth/change-password",
+      updatedCredentials
+    );
+    if (!data.success) {
+      throw new Error(
+        data.errorSources?.[0].messsage || "Password update failed"
+      );
+    }
+    await clearAuthCookies();
+    return data;
+  } catch (error: any) {
+    console.error("Password update error:", error);
+    throw new Error(
+      error.response?.data?.message ||
+        error.message ||
+        "An error occurred during password update"
+    );
+  }
+};
+
+

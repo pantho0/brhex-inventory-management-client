@@ -12,7 +12,7 @@ export default function CreateBarcodePage() {
 
  const generateBarcode = async () => {
   try {
-    const response = await fetch("http://localhost:5000/api/v1/barcode/generate", {
+    const response = await fetch("https://brhex-inventory-management.vercel.app/api/v1/barcode/generate", {
       method: "POST",
     });
 

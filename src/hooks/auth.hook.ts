@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { loginUser } from "@/services/auth";
+import { loginUser, upDatePassword } from "@/services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
@@ -17,3 +17,10 @@ export const useLogin = () => {
     },
   });
 };
+
+export const useUpdatePassword = () =>{
+  return useMutation({
+    mutationKey:["USER_PASS_CHNG"],
+    mutationFn:async(Credentials:any)=> upDatePassword(Credentials),
+  })
+}

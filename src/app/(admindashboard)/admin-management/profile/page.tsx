@@ -24,7 +24,7 @@ const ProfilePage: React.FC = () => {
   const { user } = useUser();
 
   const userProfile: any = {
-    name: user?.fullName,
+    name: user?.firstName + " " + user?.lastName,
     email: user?.email,
     avatarUrl: "https://github.com/shadcn.png",
   };
@@ -48,7 +48,7 @@ const ProfilePage: React.FC = () => {
         <CardContent className="space-y-4">
           <Separator />
           <div>
-            <Link href="/admin-dashboard/settings">
+            <Link href={`${user?.role === "admin" ? "/admin-management/settings" : "/seller-management/settings"}`}>
               <Button
                 variant="outline"
                 className="w-full bg-green-700 hover:bg-green-700/90 hover:text-white text-white flex items-center justify-start text-lg py-6 cursor-pointer"
@@ -58,7 +58,7 @@ const ProfilePage: React.FC = () => {
             </Link>
           </div>
           <div>
-            <Link href="/admin-dashboard/orders">
+            <Link href={`${user?.role === "admin" ? "/admin-management/settings" : "/seller-management/settings"}`}>
               <Button
                 variant="outline"
                 className="w-full bg-blue-700 hover:bg-blue-700/90 hover:text-white text-white flex items-center justify-start text-lg py-6 cursor-pointer"

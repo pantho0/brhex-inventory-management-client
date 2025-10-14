@@ -11,7 +11,8 @@ import {
 
 interface IUserContext {
   userId: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
   role: string;
   email: string;
   iat: number;
