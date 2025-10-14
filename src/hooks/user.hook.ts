@@ -1,5 +1,6 @@
 import {
   addUser,
+  changeUserBlockStatus,
   changeUserRole,
   changeUserStatus,
   getAllUser,
@@ -35,6 +36,15 @@ export const useChangeUserStatus = () => {
   return useMutation<any, Error, string>({
     mutationKey: ["change-user-status"],
     mutationFn: (id: string) => changeUserStatus(id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["users"] }),
+  });
+};
+
+export const useChangeUserBlockStatus = () => {
+  const queryClient = useQueryClient();
+  return useMutation<any, Error, string>({
+    mutationKey: ["change-user-block-status"],
+    mutationFn: (id: string) => changeUserBlockStatus(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["users"] }),
   });
 };

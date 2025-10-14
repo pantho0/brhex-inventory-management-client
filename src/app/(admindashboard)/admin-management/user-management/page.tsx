@@ -23,7 +23,7 @@ import { MoreHorizontal } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useChangeUserStatus, useGetAllUser } from "@/hooks/user.hook";
+import { useChangeUserBlockStatus, useChangeUserStatus, useGetAllUser } from "@/hooks/user.hook";
 import Link from "next/link";
 
 const UserManagement = () => {
@@ -31,11 +31,11 @@ const UserManagement = () => {
 
   const { data, isLoading, isError } = useGetAllUser();
   const { mutate: changeUserStatus } = useChangeUserStatus();
+  const { mutate: changeUserBlockStatus } = useChangeUserBlockStatus();
 
   const users = data?.data;
 
   const changeDeleteStatus = (id: string) => {
-    console.log(id);
     const toastId = toast.loading("Updating User Delete Status...");
     changeUserStatus(id, {
       onSuccess: () => {
@@ -43,6 +43,18 @@ const UserManagement = () => {
       },
       onError: () => {
         toast.error("Failed to change user delete status", { id: toastId });
+      },
+    });
+  };
+
+  const changeBlockStatus = (id: string) => {
+    const toastId = toast.loading("Updating User Block Status...");
+    changeUserBlockStatus(id, {
+      onSuccess: () => {
+        toast.success("User block status updated", { id: toastId });
+      },
+      onError: () => {
+        toast.error("Failed to change user block status", { id: toastId });
       },
     });
   };
@@ -86,7 +98,7 @@ const UserManagement = () => {
         </h2>
       </div>
       <div className="flex justify-end py-4 bg-green">
-        <Link href="/admin-management/add-user">
+        <Link href="/admin-management/create-user">
           <Button className="bg-green-700 hover:bg-green-700/90 cursor-pointer">
             Create User
           </Button>
@@ -103,6 +115,7 @@ const UserManagement = () => {
               <TableHead className="text-black">Email</TableHead>
               <TableHead className="text-black">Role</TableHead>
               <TableHead className="text-black">Deleted</TableHead>
+              <TableHead className="text-black">Blocked</TableHead>
               <TableHead className="text-right text-black">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -126,6 +139,14 @@ const UserManagement = () => {
                       {user.isDeleted ? "Deleted" : "Active"}
                     </Badge>
                   </TableCell>
+                  <TableCell>
+                    <Badge
+                      className="text-white"
+                      variant={user.isBlocked ? "destructive" : "secondary"}
+                    >
+                      {user.isBlocked ? "Blocked" : "Active"}
+                    </Badge>
+                  </TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -140,6 +161,12 @@ const UserManagement = () => {
                           onClick={() => changeDeleteStatus(user._id)}
                         >
                           {user.isDeleted ? "Restore User" : "Delete User"}
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem
+                          onClick={() => changeBlockStatus(user._id)}
+                        >
+                          {user.isBlocked ? "Unblock User" : "Block User"}
                         </DropdownMenuItem>
 
                         <DropdownMenuSeparator />

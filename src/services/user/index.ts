@@ -47,7 +47,7 @@ export const addUser = async (user: any) => {
 
 export const changeUserStatus = async (id: string) => {
   try {
-    const response = await axiosInstance.patch(`/users/delete-user`, { id });
+    const response = await axiosInstance.put(`/user/delete-user`, { id });
     if (!response.data.success) {
       throw new Error(response.data.message || "Error changing user status");
     }
@@ -58,6 +58,23 @@ export const changeUserStatus = async (id: string) => {
     );
   }
 };
+
+
+export const changeUserBlockStatus = async (id: string) => {
+  try {
+    const response = await axiosInstance.put(`/user/block-user`, { id });
+    if (!response.data.success) {
+      throw new Error(response.data.message || "Error changing user block status");
+    }
+    return response.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || error.message || "Error fetching data"
+    );
+  }
+};
+
+
 
 export const changeUserRole = async (userRoleInfo: any) => {
   try {
