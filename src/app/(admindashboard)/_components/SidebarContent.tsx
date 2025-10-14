@@ -176,7 +176,17 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
                     href={"/admin-management/create-invoice"}
                     label="Create Invoice"
                     icon={UserIcon}
-                  /> </> :
+                  /> 
+                  <NavItem
+                    key={"/admin-management/create-barcode"}
+                    href={"/admin-management/create-barcode"}
+                    label="Create Barcode"
+                    icon={UserIcon}
+                  />
+                  
+                  
+                  
+                  </> :
                        <>
                        <NavItem
                     key={"/seller-management"}
@@ -196,6 +206,7 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
                     label="Create Invoice"
                     icon={UserIcon}
                   />
+                  
                  </>
                  }
                  {

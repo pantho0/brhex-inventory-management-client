@@ -66,6 +66,13 @@ export const sidebarAdminNavItems: NavSection = {
       icon: UserCog,
     },
   ],
+  barcode: [
+    {
+      href: "/admin-management/create-barcode",
+      label: "Create Barcode",
+      icon: UserCog,
+    },
+  ],
   account: [
     {
       href: "/admin-management/profile",
