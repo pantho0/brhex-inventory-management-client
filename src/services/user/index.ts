@@ -19,7 +19,7 @@ export const getAllUser = async () => {
 
 export const getSingleUser = async (id: string) => {
   try {
-    const response = await axiosInstance.get(`/users/${id}`);
+    const response = await axiosInstance.get(`/user/${id}`);
     if (!response.data.success) {
       throw new Error(response.data.message || "Error fetching user");
     }
@@ -78,8 +78,8 @@ export const changeUserBlockStatus = async (id: string) => {
 
 export const changeUserRole = async (userRoleInfo: any) => {
   try {
-    const response = await axiosInstance.patch(
-      `/users/change-role`,
+    const response = await axiosInstance.put(
+      `/user/change-role`,
       userRoleInfo
     );
     if (!response.data.success) {

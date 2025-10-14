@@ -1,4 +1,4 @@
-"use client"; // This directive is correctly placed
+"use client"; 
 
 import {
   Card,
@@ -148,7 +148,15 @@ const ChangeRoleContent = () => {
                       First Name:
                     </p>
                     <p className="text-sm text-secondary dark:text-gray-400">
-                      {userInfo?.fullName?.toUpperCase()}
+                      {userInfo?.firstName?.toUpperCase()}
+                    </p>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Last Name:
+                    </p>
+                    <p className="text-sm text-secondary dark:text-gray-400">
+                      {userInfo?.lastName?.toUpperCase()}
                     </p>
                   </div>
                   <div className="flex justify-between items-center">
