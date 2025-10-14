@@ -11,7 +11,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import HashLoader from "react-spinners/HashLoader";
 import { Badge } from "@/components/ui/badge";
-import { sidebarAdminNavItems } from "./config/SidebarItems";
+import { sidebarAdminNavItems, sidebarUserNavItems } from "./config/SidebarItems";
 import { useUser } from "@/context/user.provider";
 import { logoutUser } from "@/services/auth";
 import Image from "next/image";
@@ -156,7 +156,10 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
 
                 {/* Navigation */}
                 <nav className="space-y-4">
-                  <NavItem
+                 {
+                  user?.role === "admin" ?
+                   <>
+                   <NavItem
                     key={"/admin-management"}
                     href={"/admin-management"}
                     label="Admin Dashboard"
@@ -173,8 +176,30 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
                     href={"/admin-management/create-invoice"}
                     label="Create Invoice"
                     icon={UserIcon}
+                  /> </> :
+                       <>
+                       <NavItem
+                    key={"/seller-management"}
+                    href={"/seller-management"}
+                    label="Seller Dashboard"
+                    icon={UserIcon}
                   />
-                  <Accordion type="multiple" className="w-full">
+                  <NavItem
+                    key={"/seller-management/show-inventory"}
+                    href={"/seller-management/show-inventory"}
+                    label="View Inventory"
+                    icon={UserIcon}
+                  />
+                  <NavItem
+                    key={"/seller-management/create-invoice"}
+                    href={"/seller-management/create-invoice"}
+                    label="Create Invoice"
+                    icon={UserIcon}
+                  />
+                 </>
+                 }
+                 {
+                  user?.role === "admin" ?  <Accordion type="multiple" className="w-full">
                     {/* Category Management */}
                     <AccordionItem value="category" className="border-b-0">
                       <AccordionTrigger className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
@@ -258,7 +283,40 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
                         </div>
                       </AccordionContent>
                     </AccordionItem>
+                  </Accordion> : 
+                  <Accordion type="multiple" className="w-full">
+          
+                    {/* Invoice Management */}
+                    <AccordionItem value="invoice" className="border-b-0">
+                      <AccordionTrigger className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                        Invoice Management
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-1 px-4">
+                          {sidebarUserNavItems.invoice.map((item: any) => (
+                            <NavItem key={item.href} {...item} />
+                          ))}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    {/* Manage Account */}
+                    <AccordionItem value="account" className="border-b-0">
+                      <AccordionTrigger className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                        Manage Account
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-1 px-4">
+                          {sidebarUserNavItems.account.map((item: any) => (
+                            <NavItem key={item.href} {...item} />
+                          ))}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+
+           
                   </Accordion>
+                 }
                 </nav>
               </div>
 

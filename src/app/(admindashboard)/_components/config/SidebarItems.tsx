@@ -1,4 +1,4 @@
-import { LucideIcon, Trash, Utensils } from "lucide-react";
+import { LucideIcon, Package, Trash, Utensils } from "lucide-react";
 import { FileText, HelpCircle, User, UserCog } from "lucide-react";
 
 export interface NavItem {
@@ -97,42 +97,30 @@ export const sidebarAdminNavItems: NavSection = {
   ],
 };
 
-// export const sidebarUserNavItems: NavSection = {
-//   main: [
-//     {
-//       href: "/user-management/my-orders",
-//       label: "My Orders",
-//       icon: Package,
-//     },
-//     {
-//       href: "/user-management/reviews",
-//       label: "My Reviews",
-//       icon: LayoutDashboard,
-//     },
-//   ],
-//   account: [
-//     {
-//       href: "/user-management/profile",
-//       label: "Profile",
-//       icon: User,
-//     },
-//     {
-//       href: "/user-management/settings",
-//       label: "Settings",
-//       icon: Settings,
-//     },
-//   ],
-//   service: [
-//     {
-//       href: "/user-management/help",
-//       label: "Help Center",
-//       icon: HelpCircle,
-//     },
-//     {
-//       href: "/user-management/terms",
-
-//       label: "Terms & Conditions",
-//       icon: FileText,
-//     },
-//   ],
-// };
+export const sidebarUserNavItems: NavSection = {
+  invoice: [
+    {
+      href: "/seller-management/create-invoice",
+      label: "Create Invoice",
+      icon: User,
+    },
+    {
+      href: "/seller-management/get-all-invoice",
+      label: "View All Invoice",
+      icon: UserCog,
+    },
+    {
+      href: "/seller-management/update-payment",
+      label: "Update Payment",
+      icon: UserCog,
+    }, 
+  ],
+  account: [
+    {
+      href: "/seller-management/profile",
+      label: "Profile",
+      icon: User,
+    },
+   
+  ],
+};
