@@ -111,8 +111,7 @@ export function generateInvoiceNo(prefix: string = "BCC"): string {
   const minutes = String(now.getMinutes()).padStart(2, "0");
   const seconds = String(now.getSeconds()).padStart(2, "0");
 
-  // Random suffix (4 alphanumeric chars)
-  const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
 
-  return `${prefix}-INV-${year}${month}${day}-${hours}${minutes}${seconds}-${randomSuffix}`;
+
+  return `${prefix}-INV-${year}${month}${day}-${hours}${minutes}${seconds}`;
 }
