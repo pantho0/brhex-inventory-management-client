@@ -14,10 +14,11 @@ export const useCreateInvoice = () => {
   });
 };
 
-export const useGetAllInvoice = (queryParams: Record<string, unknown> = {}) => {
+export const useGetAllInvoice = (queryParams: Record<string, unknown> = {},  options?: any) => {
   return useQuery({
     queryKey: ["get-all-invoice", queryParams], // query key includes params
     queryFn: () => getAllInvoice(queryParams),
+    ...options,
   });
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -11,18 +12,24 @@ export default function UpdatePaymentPage() {
   const [invoiceNo, setInvoiceNo] = useState("");
   const [query, setQuery] = useState<Record<string, unknown>>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: fetchedInvoices, isPending } = useGetAllInvoice(query);
+  const [shouldFetch, setShouldFetch] = useState(false);
+  const { data: fetchedInvoices, } = useGetAllInvoice(query, {
+    enabled: shouldFetch && !!query.searchTerm,
+  });
 
   const invoice =
+    // @ts-ignore
     fetchedInvoices?.data?.result && fetchedInvoices.data.result.length > 0
+    // @ts-ignore
       ? fetchedInvoices.data.result[0]
       : null;
 
-  console.log(invoice);
+      console.log(invoice)
 
   const handleSearch = () => {
     if (invoiceNo.trim()) {
       setQuery({ searchTerm: invoiceNo.toUpperCase() });
+      setShouldFetch(true);
     }
   };
 
@@ -35,8 +42,8 @@ export default function UpdatePaymentPage() {
           value={invoiceNo}
           onChange={(e) => setInvoiceNo(e.target.value)}
         />
-        <Button onClick={handleSearch} disabled={isPending}>
-          {isPending ? "Searching..." : "Search"}
+        <Button onClick={handleSearch} >
+          Search
         </Button>
       </div>
 
