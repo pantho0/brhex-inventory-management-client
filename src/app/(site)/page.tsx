@@ -6,6 +6,7 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useLogin } from "@/hooks/auth.hook";
 import Logo from "../../../public/images/logo.png";
 import Image from "next/image";
+import Link from "next/link";
 
 
 const LoginPage = () => {
@@ -48,6 +49,9 @@ const LoginPage = () => {
                   fontColor="text-white"
                 />
               </div>
+
+
+              <p className="text-right text-pretty">Forgot Password? <Link href="/reset-password" className="text-primary">Click Here</Link></p>
 
               <Button type="submit" className="mt-6 w-full cursor-pointer">
                 Login
