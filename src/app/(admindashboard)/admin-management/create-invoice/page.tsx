@@ -189,7 +189,7 @@ export default function CreateInvoice() {
           <Input
             id="discount"
             type="number"
-            value={discount}
+            // value={discount}
             onChange={(e) => setDiscount(Number(e.target.value))}
             placeholder="Discount"
           />
@@ -200,7 +200,7 @@ export default function CreateInvoice() {
           <Input
             id="tax"
             type="number"
-            value={tax}
+            // value={tax}
             onChange={(e) => setTax(Number(e.target.value))}
             placeholder="Tax"
           />

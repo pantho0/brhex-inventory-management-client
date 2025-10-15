@@ -162,7 +162,6 @@ body {
     }
   }
 }
-
 @media print {
 
   @page {
@@ -185,13 +184,16 @@ body {
   .invoice-box {
     width: 100%;
     height: 100%;
-    border: 2px double #000;
+    border: 1px dotted #2b2a2abd;
     padding: 1rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
   }
 }
+
+
+
 
 
 @media print {

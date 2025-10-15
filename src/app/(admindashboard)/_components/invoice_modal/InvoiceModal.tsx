@@ -56,48 +56,65 @@ const InvoiceModal: React.FC<InvoiceModalProps> = ({ invoice }) => {
         <div id="printable-area" ref={a4PrintRef}>
           <div className="invoice-box text-black">
             {/* --- Top Section --- */}
-            <div>
-              <div className="flex flex-row items-center justify-center text-center gap-2">
-                <Image
-                  src={logo}
-                  alt="Logo"
-                  width={40}
-                  height={40}
-                  className="w-[40px] h-[40px]"
-                />
-                <h1 className="text-2xl font-bold">
-                  Brothers Computer and Communication
-                </h1>
-              </div>
-              <div className="text-center mb-8">
-                <p className="text-xs">
-                  Gokorno Road (opposite of Homeopathy College), Brahmanbaria
-                </p>
-                <p className="text-xs">Contact No: +880123456789</p>
-              </div>
+          <div className="border-b-2 border-gray-300 pb-4 mb-[2px] flex justify-between items-center">
+    <div className="flex items-center gap-4">
+      <Image
+        src={logo}
+        alt="Logo"
+        width={60}
+        height={60}
+        className="rounded-md border border-gray-200"
+      />
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900">
+          Brothers Computer & Communication
+        </h1>
+        <p className="text-sm text-gray-600">
+          Gokorno Road (Opp. of Homeopathy College), Brahmanbaria
+        </p>
+        <p className="text-sm text-gray-600">Contact: +880123456789</p>
+      </div>
+    </div>
 
-              <div className="flex justify-between text-sm">
-                <div>
-                  <p className="font-semibold mb-1">Billed To:</p>
-                  <p>{invoice?.customerName}</p>
-                  {invoice?.address && <p>{invoice.address}</p>}
-                  {invoice?.mobile && <p>Mobile: {invoice.mobile}</p>}
-                </div>
-                <div className="text-right">
-                  <p>
-                    <span className="font-semibold">Invoice No:</span>{" "}
-                    {invoice?.invoiceNo}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Date:</span>{" "}
-                    {invoice?.createdAt
-                      ? new Date(invoice.createdAt).toLocaleString()
-                      : new Date().toLocaleString()}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <Separator className="my-4 bg-black" />
+    <div className="text-right">
+      <h2 className="text-2xl font-bold text-gray-900 tracking-wide">
+        INVOICE
+      </h2>
+      <p className="text-sm text-gray-600">#{invoice?.invoiceNo}</p>
+      <p className="text-sm text-gray-600">
+        {invoice?.createdAt
+          ? new Date(invoice.createdAt).toLocaleDateString()
+          : new Date().toLocaleDateString()}
+      </p>
+    </div>
+  </div>
+
+  {/* --- BILLING INFO --- */}
+  <div className="grid grid-cols-2 mb-[2px]">
+    <div>
+      <h3 className="font-semibold text-gray-800 mb-1">Billed To</h3>
+      <p className="text-sm">{invoice?.customerName}</p>
+      {invoice?.address && <p className="text-sm">{invoice.address}</p>}
+      {invoice?.mobile && <p className="text-sm">Mobile: {invoice.mobile}</p>}
+    </div>
+    <div className="text-right">
+      <h3 className="font-semibold text-gray-800 mb-1">Payment Details</h3>
+      <p className="text-xs">Method: {invoice?.paymentMethod || "Cash"}</p>
+      <p className="text-xs">
+        Status:
+        <span
+          className={`ml-1 px-2 py-0.5 rounded-full text-xs font-semibold ${
+            invoice?.dueAmount > 0
+              ? "bg-red-100 text-red-700"
+              : "bg-green-100 text-green-700"
+          }`}
+        >
+          {invoice?.dueAmount > 0 ? "DUE" : "PAID"}
+        </span>
+      </p>
+    </div>
+  </div>
+            <Separator className="my-2 bg-black" />
             {/* --- Middle, Growing Section --- */}
             <div className="flex-grow">
               <table className="w-full border border-gray-300 text-sm">
@@ -110,7 +127,7 @@ const InvoiceModal: React.FC<InvoiceModalProps> = ({ invoice }) => {
                     <th className="border p-2 text-right">Price</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="text-[12px]">
                   {invoice?.items?.map((item: any, idx: number) => (
                     <tr key={item._id}>
                       <td className="border p-2">{idx + 1}</td>

@@ -1,4 +1,4 @@
-import { LucideIcon, Package, Trash, Utensils } from "lucide-react";
+import { LucideIcon,  Trash, Utensils } from "lucide-react";
 import { FileText, HelpCircle, User, UserCog } from "lucide-react";
 
 export interface NavItem {

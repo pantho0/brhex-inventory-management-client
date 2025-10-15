@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 import TitleWrapper from "@/components/adminDashboard/TitleWrapper";
 import { useGetAllInvoice } from "@/hooks/invoice.hook";
@@ -33,8 +34,10 @@ function GetAllInvoicePage() {
 
   const { data: fetchedInvoices, isPending } = useGetAllInvoice(query);
 
+// @ts-ignore
   const invoices = fetchedInvoices?.data?.result;
-  console.log(invoices)
+
+// @ts-ignore
   const meta = fetchedInvoices?.data?.meta;
 
   return (
