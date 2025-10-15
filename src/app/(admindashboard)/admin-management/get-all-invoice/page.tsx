@@ -29,11 +29,12 @@ function GetAllInvoicePage() {
   const [query, setQuery] = useState<{ page: number } & Record<string, unknown>>({
     page: 1,
   });
-  console.log(query);
+
 
   const { data: fetchedInvoices, isPending } = useGetAllInvoice(query);
 
   const invoices = fetchedInvoices?.data?.result;
+  console.log(invoices)
   const meta = fetchedInvoices?.data?.meta;
 
   return (

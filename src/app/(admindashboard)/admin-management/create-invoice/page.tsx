@@ -66,6 +66,7 @@ export default function CreateInvoice() {
               productId: product.product._id,
               productName: product.product.name,
               serialNumber: product.serialNumber,
+              warranty: product.warranty,
               price: product.price,
             },
           ];
@@ -231,7 +232,7 @@ export default function CreateInvoice() {
       {/* Cart Table */}
       <Table>
         <TableCaption>Scanned/Added Products</TableCaption>
-        <TableHeader>
+        <TableHeader className="bg-slate-500">
           <TableRow>
             <TableHead>Product Name</TableHead>
             <TableHead>Serial Number</TableHead>
@@ -245,7 +246,7 @@ export default function CreateInvoice() {
               <TableCell>{item.productName}</TableCell>
               <TableCell>{item.serialNumber}</TableCell>
               <TableCell className="text-right">
-                ${item.price.toFixed(2)}
+                ৳{item.price.toFixed(2)}
               </TableCell>
               <TableCell className="text-center">
                 <Button
@@ -262,18 +263,18 @@ export default function CreateInvoice() {
         <TableFooter>
           <TableRow>
             <TableCell colSpan={3}>Subtotal</TableCell>
-            <TableCell className="text-right">${subtotal.toFixed(2)}</TableCell>
+            <TableCell className="text-right">৳{subtotal.toFixed(2)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={3}>Discount</TableCell>
             <TableCell className="text-right">
-              -${discount.toFixed(2)}
+              -৳{discount.toFixed(2)}
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={3}>Tax ({tax}%)</TableCell>
             <TableCell className="text-right">
-              +${taxAmount.toFixed(2)}
+              +৳{taxAmount.toFixed(2)}
             </TableCell>
           </TableRow>
           <TableRow>
@@ -281,25 +282,25 @@ export default function CreateInvoice() {
               Grand Total
             </TableCell>
             <TableCell className="text-right font-bold">
-              ${grandTotal.toFixed(2)}
+             ৳{grandTotal.toFixed(2)}
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={3}>Paid Amount</TableCell>
             <TableCell className="text-right">
-              ${paidAmount.toFixed(2)}
+              ৳{paidAmount.toFixed(2)}
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={3}>Due Amount</TableCell>
             <TableCell className="text-right">
-              ${dueAmount.toFixed(2)}
+              ৳{dueAmount.toFixed(2)}
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={3}>Return Amount</TableCell>
             <TableCell className="text-right text-green-600">
-              ${returnAmount.toFixed(2)}
+              ৳{returnAmount.toFixed(2)}
             </TableCell>
           </TableRow>
         </TableFooter>
@@ -308,7 +309,7 @@ export default function CreateInvoice() {
       <div className="mt-6">
         <Button
           onClick={handleSubmitInvoice}
-          className="bg-green-600 text-white"
+          className="bg-green-600 cursor-pointer text-white"
         >
           Submit Invoice
         </Button>

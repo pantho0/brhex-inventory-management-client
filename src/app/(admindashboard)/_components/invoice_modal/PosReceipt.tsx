@@ -107,6 +107,10 @@ export const POSReceipt = React.forwardRef<HTMLDivElement, POSReceiptProps>(
                   <span style={{ fontSize: "10px" }}>
                     SN: {item.serialNumber}
                   </span>
+                  <br />
+                  <span style={{ fontSize: "10px" }}>
+                    Warranty: {item.warranty}
+                  </span>
                 </td>
                 <td
                   style={{

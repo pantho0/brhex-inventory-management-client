@@ -106,6 +106,7 @@ const InvoiceModal: React.FC<InvoiceModalProps> = ({ invoice }) => {
                     <th className="border p-2 text-left">#</th>
                     <th className="border p-2 text-left">Product</th>
                     <th className="border p-2 text-left">Serial</th>
+                    <th className="border p-2 text-left">Warranty</th>
                     <th className="border p-2 text-right">Price</th>
                   </tr>
                 </thead>
@@ -115,6 +116,7 @@ const InvoiceModal: React.FC<InvoiceModalProps> = ({ invoice }) => {
                       <td className="border p-2">{idx + 1}</td>
                       <td className="border p-2">{item.productName}</td>
                       <td className="border p-2">{item.serialNumber}</td>
+                      <td className="border p-2">{item.warranty}</td>
                       <td className="border p-2 text-right">
                         {item.price.toFixed(2)}
                       </td>
