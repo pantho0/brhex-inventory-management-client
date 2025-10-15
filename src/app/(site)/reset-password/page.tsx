@@ -64,7 +64,7 @@ const ForgetPasswordPage = () => {
         </CardHeader>
         <CardContent>
           <CustomForm onSubmit={handleSubmit}>
-            <div className="grid gap-2">
+            <div className="grid gap-2 text-white">
               <CustomInput
                 name="email"
                 label="Email"

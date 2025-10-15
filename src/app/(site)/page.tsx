@@ -7,10 +7,20 @@ import { useLogin } from "@/hooks/auth.hook";
 import Logo from "../../../public/images/logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import { useUser } from "@/context/user.provider";
+import { useRouter } from "next/navigation";
+
 
 
 const LoginPage = () => {
   const { mutate: handleLogin } = useLogin();
+  const {user} = useUser()
+  const router = useRouter()
+
+
+  if(user?.role){
+  router.push("/dashboard")
+  }
 
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
