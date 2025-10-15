@@ -20,7 +20,8 @@ const LoginPage = () => {
   return (
     <div className="bg-black">
       <div className="container  max-w-6xl mx-auto h-screen flex items-center flex-col justify-center">
-        <div className="flex flex-col justify-center gap-4 mb-5">
+       <div className="border py-10 px-30 rounded-lg">
+         <div className="flex flex-col justify-center gap-4 mb-5">
           <div className="flex justify-center">
             <Image src={Logo} alt="Logo" width={180} height={180} />
           </div>
@@ -59,6 +60,7 @@ const LoginPage = () => {
             </div>
           </CustomForm>
         </div>
+       </div>
       </div>
     </div>
   );
