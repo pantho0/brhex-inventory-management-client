@@ -16,32 +16,33 @@ import Logo from "../../../../public/images/logo.png";
 import { useRouter } from "next/navigation";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
+import { useForgetPass } from "@/hooks/auth.hook";
 
 const ForgetPasswordPage = () => {
-//   const { mutate: handleForgetPass } = useForgetPass();
+  const { mutate: handleForgetPass } = useForgetPass();
   const router = useRouter();
 
   const handleSubmit: SubmitHandler<FieldValues> = (forgetPassInfo) => {
-    console.log(forgetPassInfo);
-    // const toastId = toast.loading("Sending reset link...");
-    // handleForgetPass(forgetPassInfo, {
-    //   onSuccess: () => {
-    //     router.push("/login");
-    //     toast.success(
-    //       "Reset link sent to your email. Check inbox/spam folder please",
-    //       {
-    //         id: toastId,
-    //         duration: 4000,
-    //       }
-    //     );
-    //   },
-    //   onError: (error) => {
-    //     toast.error(error.message, {
-    //       id: toastId,
-    //       duration: 4000,
-    //     });
-    //   },
-    // });
+  
+    const toastId = toast.loading("Sending reset link...");
+    handleForgetPass(forgetPassInfo, {
+      onSuccess: () => {
+        router.push("/");
+        toast.success(
+          "Reset link sent to your email. Check inbox/spam folder please",
+          {
+            id: toastId,
+            duration: 4000,
+          }
+        );
+      },
+      onError: (error) => {
+        toast.error(error.message, {
+          id: toastId,
+          duration: 4000,
+        });
+      },
+    });
   };
 
   return (

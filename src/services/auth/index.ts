@@ -84,3 +84,25 @@ export const upDatePassword = async (updatedCredentials: FieldValues) => {
 };
 
 
+export const forgetPassword = async (forgetPassInfo: FieldValues) => {
+  try {
+    const res = await axiosInstance.post(
+      "/auth/forget-password",
+      forgetPassInfo
+    );
+    if (!res.data.success) {
+      throw new Error(
+        res.data.message || "Failed to create forget password request to server"
+      );
+    }
+    return res.data;
+  } catch (error: any) {
+    throw new Error(
+      error.message || "Failed to create forget password request to server"
+    );
+  }
+};
+
+
+
+
