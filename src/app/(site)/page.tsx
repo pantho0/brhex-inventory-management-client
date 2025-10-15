@@ -7,12 +7,15 @@ import { useLogin } from "@/hooks/auth.hook";
 import Logo from "../../../public/images/logo.png";
 import Image from "next/image";
 
+
 const LoginPage = () => {
   const { mutate: handleLogin } = useLogin();
+
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     handleLogin(data);
   };
+
   return (
     <div className="bg-black">
       <div className="container  max-w-6xl mx-auto h-screen flex items-center flex-col justify-center">

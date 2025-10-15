@@ -9,8 +9,8 @@ type Role = keyof typeof roleBasedRoutes;
 
 const AuthRoutes = ["/login",];
 const roleBasedRoutes = {
-  user: [/^\/seller-management/],
-  admin: [/^\/admin-management/],
+  user: [/^\/seller-management/, /^\/dashboard/],
+  admin: [/^\/admin-management/, /^\/dashboard/],
 };
 
 // This function can be marked `async` if using `await` inside
@@ -42,5 +42,5 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/seller-management", "/seller-management/:page*", "/admin-management", "/admin-management/:page*", "/login"],
+  matcher: ["/dashboard", "/seller-management", "/seller-management/:page*", "/admin-management", "/admin-management/:page*", "/login"],
 };

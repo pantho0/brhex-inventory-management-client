@@ -41,8 +41,9 @@ const SettingsPage: React.FC = () => {
         toast.success("Password Changed Successfully",{id:toastId})
         router.push("/")
       },
-      onError:()=>{
-        toast.error("Password Change Failed",{id:toastId})
+      onError:(error)=>{
+        console.log(error)
+        toast.error(error?.message || "Password Change Failed",{id:toastId})
       }
     })
   };

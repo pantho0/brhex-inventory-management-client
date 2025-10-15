@@ -9,7 +9,7 @@ export const useLogin = () => {
     mutationKey: ["USER_LOGIN"],
     mutationFn: async (userData: FieldValues) => await loginUser(userData),
     onSuccess: () => {
-      window.location.href = "/admin-management";
+      window.location.href = "/dashboard";
       toast.success("User Logged In Successfully");
     },
     onError: (error: any) => {

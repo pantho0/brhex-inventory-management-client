@@ -1,10 +1,11 @@
 "use client";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { SidebarContent } from "../_components/SidebarContent";
+
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 
 import { useState } from "react";
+import SidebarContent from "./_components/SidebarContent";
 
 export default function DashboardLayout({
   children,

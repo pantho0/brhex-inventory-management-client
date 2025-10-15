@@ -30,7 +30,7 @@ interface NavItemProps {
 }
 
 export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
-  const { user, loading, setLoading } = useUser();
+  const { user, loading, setLoading, setUser } = useUser();
   const router = useRouter();
 
   const [mounted, setMounted] = useState(false);
@@ -72,6 +72,8 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
     setClickedLogut(true);
     logoutUser();
     router.push("/");
+    setLoading(true);
+    setUser(null);
     setClickedLogut(false);
   };
 
@@ -135,21 +137,23 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
                     />
                     <AvatarFallback className="bg-gray-600">US</AvatarFallback>
                   </Avatar>
-                  <div>
-                    {loading ? (
-                      <div className="space-y-2">
-                        <div className="h-4 w-24 bg-gray-600 rounded animate-pulse"></div>
-                        <div className="h-3 w-32 bg-gray-600 rounded animate-pulse"></div>
+                  <div className="min-w-0">
+                    {loading || !user ? (
+                      <div className="space-y-2 w-full">
+                        <div className="h-4 w-32 bg-gray-600 rounded animate-pulse"></div>
+                        <div className="h-3 w-40 bg-gray-600 rounded animate-pulse"></div>
                       </div>
                     ) : (
-                      <>
-                        <p className="font-semibold text-white">
-                          {user?.fullName || "User"}
+                      <div className="min-w-0">
+                        <p className="font-semibold text-white truncate">
+                          {user.firstName || user.lastName 
+                            ? `${user.firstName || ''} ${user.lastName || ''}`.trim() 
+                            : 'User'}
                         </p>
-                        <p className="text-xs text-gray-400">
-                          {user?.email || "user@example.com"}
+                        <p className="text-xs text-gray-400 truncate">
+                          {user.email || 'user@example.com'}
                         </p>
-                      </>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -160,9 +164,9 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
                   user?.role === "admin" ?
                    <>
                    <NavItem
-                    key={"/admin-management"}
-                    href={"/admin-management"}
-                    label="Admin Dashboard"
+                    key={"/dashboard"}
+                    href={"/dashboard"}
+                    label="Dashboard"
                     icon={UserIcon}
                   />
                   <NavItem
@@ -189,9 +193,9 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
                   </> :
                        <>
                        <NavItem
-                    key={"/seller-management"}
-                    href={"/seller-management"}
-                    label="Seller Dashboard"
+                    key={"/dashboard"}
+                    href={"/dashboard"}
+                    label="Dashboard"
                     icon={UserIcon}
                   />
                   <NavItem
