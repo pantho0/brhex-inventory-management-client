@@ -67,6 +67,7 @@ export default function CreateInvoice() {
               productName: product.product.name,
               serialNumber: product.serialNumber,
               warranty: product.warranty,
+              purchased_price: product.purchased_price,
               price: product.price,
             },
           ];
@@ -236,7 +237,7 @@ export default function CreateInvoice() {
       <Table>
         <TableCaption>Scanned/Added Products</TableCaption>
         <TableHeader className="bg-slate-500">
-          <TableRow>
+          <TableRow >
             <TableHead>Product Name</TableHead>
             <TableHead>Serial Number</TableHead>
             <TableHead className="text-right">Price</TableHead>

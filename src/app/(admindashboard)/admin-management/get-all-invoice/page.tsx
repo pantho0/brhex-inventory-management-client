@@ -22,7 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { Button } from "@/components/ui/button";
 import PaginationComponent from "../../_components/pagination/PaginationComponent";
 
@@ -31,14 +30,18 @@ function GetAllInvoicePage() {
     page: 1,
   });
 
-
   const { data: fetchedInvoices, isPending } = useGetAllInvoice(query);
 
-// @ts-ignore
+  // @ts-ignore
   const invoices = fetchedInvoices?.data?.result;
 
-// @ts-ignore
+  // @ts-ignore
   const meta = fetchedInvoices?.data?.meta;
+
+  const formatNumber = (num: number | undefined) => {
+    if (num === undefined || num === null) return "0.00";
+    return new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
+  };
 
   return (
     <div className="text-black font-sans px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
@@ -73,8 +76,7 @@ function GetAllInvoicePage() {
                 setQuery({
                   ...query,
                   page: 1,
-                  paymentStatus:
-                    value === "all" ? undefined : value.toLowerCase(),
+                  paymentStatus: value === "all" ? undefined : value.toLowerCase(),
                 })
               }
             >
@@ -121,12 +123,14 @@ function GetAllInvoicePage() {
                 <TableHead>Invoice No</TableHead>
                 <TableHead>Customer</TableHead>
                 <TableHead>Items</TableHead>
-                <TableHead>Subtotal</TableHead>
-                <TableHead>Discount</TableHead>
-                <TableHead>Tax</TableHead>
-                <TableHead>Total</TableHead>
-                <TableHead>Paid</TableHead>
-                <TableHead>Due/Return</TableHead>
+                <TableHead className="text-right">Subtotal</TableHead>
+                <TableHead className="text-right">Discount</TableHead>
+                <TableHead className="text-right">Tax</TableHead>
+                <TableHead className="text-right">Total</TableHead>
+                <TableHead className="text-right">Total Purchased</TableHead>
+                <TableHead className="text-right">Profit</TableHead>
+                <TableHead className="text-right">Paid</TableHead>
+                <TableHead className="text-right">Due/Return</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="text-right">Action</TableHead>
               </TableRow>
@@ -139,32 +143,24 @@ function GetAllInvoicePage() {
 
                 return (
                   <TableRow key={inv?._id || idx}>
-                    <TableCell className="font-medium text-black">
-                      {idx + 1}
+                    <TableCell className="font-medium text-black">{idx + 1}</TableCell>
+                    <TableCell className="font-medium text-black">{inv?.invoiceNo}</TableCell>
+                    <TableCell className="text-black">{inv?.customerName}</TableCell>
+                    <TableCell className="text-black">{(inv?.items || []).length} item(s)</TableCell>
+                    <TableCell className="text-right text-black">{formatNumber(inv?.subtotal)}</TableCell>
+                    <TableCell className="text-right text-black">{formatNumber(inv?.discount)}</TableCell>
+                    <TableCell className="text-right text-black">{formatNumber(inv?.tax)}</TableCell>
+                    <TableCell className="text-right font-semibold text-black">{formatNumber(inv?.total)}</TableCell>
+                    <TableCell className="text-right text-black font-medium">{formatNumber(inv?.totalPurchasedPrice)}</TableCell>
+                    <TableCell
+                      className={`text-right font-medium ${
+                        (inv?.profit ?? 0) >= 0 ? "text-green-700" : "text-red-600"
+                      }`}
+                    >
+                      {formatNumber(inv?.profit)}
                     </TableCell>
-                    <TableCell className="font-medium text-black">
-                      {inv?.invoiceNo}
-                    </TableCell>
-                    <TableCell className="text-black">
-                      {inv?.customerName}
-                    </TableCell>
-                    <TableCell className="text-black">
-                      {(inv?.items || []).length} item(s)
-                    </TableCell>
-                    <TableCell className="text-black">
-                      {inv?.subtotal}
-                    </TableCell>
-                    <TableCell className="text-black">
-                      {inv?.discount}
-                    </TableCell>
-                    <TableCell className="text-black">{inv?.tax}</TableCell>
-                    <TableCell className="font-semibold text-black">
-                      {inv?.total}
-                    </TableCell>
-                    <TableCell className="text-black">
-                      {inv?.paidAmount}
-                    </TableCell>
-                    <TableCell>
+                    <TableCell className="text-right text-black">{formatNumber(inv?.paidAmount)}</TableCell>
+                    <TableCell className="text-right">
                       <Badge
                         variant="outline"
                         className={
@@ -176,9 +172,9 @@ function GetAllInvoicePage() {
                         }
                       >
                         {isReturn
-                          ? `Return ${Math.abs(due)}`
+                          ? `Return ${formatNumber(Math.abs(due))}`
                           : due > 0
-                          ? `Due ${due}`
+                          ? `Due ${formatNumber(due)}`
                           : "Clear"}
                       </Badge>
                     </TableCell>
@@ -205,11 +201,7 @@ function GetAllInvoicePage() {
             </TableBody>
           </Table>
           <div>
-            <PaginationComponent
-              meta={meta}
-              query={query}
-              setQuery={setQuery}
-            />
+            <PaginationComponent meta={meta} query={query} setQuery={setQuery} />
           </div>
         </div>
       )}

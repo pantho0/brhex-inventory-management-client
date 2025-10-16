@@ -144,7 +144,7 @@ function AddInventoryItemPage() {
             {/* ✅ Serial Numbers Table */}
             {serials.length > 0 && (
               <Table className="border mt-4">
-                <TableHeader>
+                <TableHeader className="bg-slate-500">
                   <TableRow>
                     <TableHead>Serial Number</TableHead>
                     <TableHead>Action</TableHead>
