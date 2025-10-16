@@ -109,19 +109,19 @@ export default function SalesStatementPage() {
       <Card className="p-6 shadow-md border border-gray-200">
         <CardHeader>
           <CardTitle>
-            <Skeleton className="h-6 w-64 mb-2" />
+            <Skeleton className="h-6 w-64 mb-2 bg-primary" />
           </CardTitle>
-          <Skeleton className="h-4 w-48" />
+          <Skeleton className="h-4 w-48 bg-primary" />
         </CardHeader>
         <CardContent>
           <div className="flex gap-4 mb-6">
-            <Skeleton className="h-10 w-32" />
-            <Skeleton className="h-10 w-24" />
-            <Skeleton className="h-10 w-36" />
+            <Skeleton className="h-10 w-32 bg-primary" />
+            <Skeleton className="h-10 w-24 bg-primary" />
+            <Skeleton className="h-10 w-36 bg-primary" />
           </div>
           <div className="space-y-2">
             {[...Array(8)].map((_, i) => (
-              <Skeleton key={i} className="h-8 w-full rounded-md" />
+              <Skeleton key={i} className="h-8 w-full rounded-md bg-primary" />
             ))}
           </div>
         </CardContent>
@@ -197,7 +197,7 @@ export default function SalesStatementPage() {
       <CardContent>
         <Table>
           <TableHeader>
-            <TableRow className="bg-slate-600 text-white">
+            <TableRow className="bg-primary text-white">
               <TableHead>Date</TableHead>
               <TableHead className="text-right">Total Paid</TableHead>
               <TableHead className="text-right">Total Due</TableHead>

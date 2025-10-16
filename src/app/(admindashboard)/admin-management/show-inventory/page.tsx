@@ -34,7 +34,7 @@ function ShowInventory() {
         <TableCaption>
           Summary of all products: in-stock and sold quantities
         </TableCaption>
-        <TableHeader className="bg-gray-600 text-white">
+        <TableHeader className="bg-primary text-white">
           <TableRow>
             <TableHead className="w-[5%]">SL</TableHead>
             <TableHead className="w-[60%]">Product Name</TableHead>

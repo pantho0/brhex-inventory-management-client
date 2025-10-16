@@ -66,17 +66,17 @@ const UserManagement = () => {
         <h1 className="text-3xl font-bold mb-6">User Management</h1>
         <div className="hidden md:block">
           <div className="border rounded-md p-4">
-            <Skeleton className="h-10 w-full mb-4" />
-            <Skeleton className="h-10 w-full mb-4" />
-            <Skeleton className="h-10 w-full mb-4" />
-            <Skeleton className="h-10 w-full mb-4" />
-            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-10 w-full mb-4 bg-primary" />
+            <Skeleton className="h-10 w-full mb-4 bg-primary" />
+            <Skeleton className="h-10 w-full mb-4 bg-primary" />
+            <Skeleton className="h-10 w-full mb-4 bg-primary" />
+            <Skeleton className="h-10 w-full bg-primary" />
           </div>
         </div>
         <div className="grid grid-cols-1 gap-4 md:hidden">
-          <Skeleton className="h-40 w-full" />
-          <Skeleton className="h-40 w-full" />
-          <Skeleton className="h-40 w-full" />
+          <Skeleton className="h-40 w-full bg-primary" />
+          <Skeleton className="h-40 w-full bg-primary" />
+          <Skeleton className="h-40 w-full bg-primary" />
         </div>
       </div>
     );
@@ -98,9 +98,9 @@ const UserManagement = () => {
           User Management
         </h2>
       </div>
-      <div className="flex justify-end py-4 bg-green">
+      <div className="flex justify-end py-4">
         <Link href="/admin-management/create-user">
-          <Button className="bg-green-700 hover:bg-green-700/90 cursor-pointer">
+          <Button className="bg-primary cursor-pointer">
             Create User
           </Button>
         </Link>
@@ -110,14 +110,14 @@ const UserManagement = () => {
       <div className="hidden md:block">
         <Table>
           <TableHeader
-            className={`border-b transition-colors ${"bg-gray-200"} text-black`}
+            className="bg-primary text-white"
           >
             <TableRow>
-              <TableHead className="text-black">Email</TableHead>
-              <TableHead className="text-black">Role</TableHead>
-              <TableHead className="text-black">Deleted</TableHead>
-              <TableHead className="text-black">Blocked</TableHead>
-              <TableHead className="text-right text-black">Actions</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Deleted</TableHead>
+              <TableHead>Blocked</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

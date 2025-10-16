@@ -23,7 +23,7 @@ function GetAllCategory() {
       <div>
         <Table>
           <TableCaption>A list of your categories.</TableCaption>
-          <TableHeader className="bg-gray-600 text-white">
+          <TableHeader className="bg-primary text-white">
             <TableRow>
               <TableHead className="w-[100px] ">Category Name</TableHead>
 

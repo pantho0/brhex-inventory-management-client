@@ -34,7 +34,9 @@ export default function CreateBarcodePage() {
     return  <div className="text-black font-sans px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
       <TitleWrapper title="Create Barcode" />
 
-      <Button onClick={generateBarcode} className="bg-blue-600 hover:bg-blue-700">
+      <h1 className="text-2xl">For Create Barcode PDF</h1>
+
+      <Button onClick={generateBarcode} className="bg-primary w-full cursor-pointer ">
       Generate Barcodes
     </Button>
     </div>

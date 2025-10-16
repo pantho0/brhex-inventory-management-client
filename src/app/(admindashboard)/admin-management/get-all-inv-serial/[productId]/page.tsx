@@ -140,7 +140,7 @@ const GetAllInvByProductSerial = ({
       {/* Inventory Table */}
       <Table>
         <TableCaption>A list of your inventory items.</TableCaption>
-        <TableHeader className="bg-gray-600 text-white">
+        <TableHeader className="bg-primary text-white">
           <TableRow>
             <TableHead>SL No.</TableHead>
             <TableHead>Category</TableHead>

@@ -26,7 +26,7 @@ function ViewAllInventoryItems() {
       <div>
         <Table>
           <TableCaption>A list of your inventory items.</TableCaption>
-          <TableHeader className="bg-gray-600 text-white">
+          <TableHeader className="bg-primary text-white">
             <TableRow>
               <TableHead className="">Product Name</TableHead>
               <TableHead className="">Category</TableHead>

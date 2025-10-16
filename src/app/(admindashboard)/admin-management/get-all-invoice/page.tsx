@@ -117,7 +117,7 @@ function GetAllInvoicePage() {
         <div className="mt-4">
           <Table>
             <TableCaption>A list of your invoices.</TableCaption>
-            <TableHeader className="bg-gray-600 text-white">
+            <TableHeader className="bg-primary text-white">
               <TableRow>
                 <TableHead>#</TableHead>
                 <TableHead>Invoice No</TableHead>

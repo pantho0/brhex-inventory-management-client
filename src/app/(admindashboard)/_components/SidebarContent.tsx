@@ -176,6 +176,12 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
                     icon={UserIcon}
                   />
                   <NavItem
+                    key={"/admin-management/income-statement"}
+                    href={"/admin-management/income-statement"}
+                    label="Income Statement"
+                    icon={UserIcon}
+                  />
+                  <NavItem
                     key={"/admin-management/show-inventory"}
                     href={"/admin-management/show-inventory"}
                     label="View Inventory"

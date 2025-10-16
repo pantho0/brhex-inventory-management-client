@@ -79,14 +79,14 @@ export default function IncomeStatementPage() {
       <Card className="p-6 shadow-md border border-gray-200">
         <CardHeader>
           <CardTitle>
-            <Skeleton className="h-6 w-64 mb-2" />
+            <Skeleton className="h-6 w-64 mb-2 bg-primary" />
           </CardTitle>
-          <Skeleton className="h-4 w-48" />
+          <Skeleton className="h-4 w-48 bg-primary" />
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
             {[...Array(8)].map((_, i) => (
-              <Skeleton key={i} className="h-8 w-full rounded-md" />
+              <Skeleton key={i} className="h-8 w-full rounded-md bg-primary" />
             ))}
           </div>
         </CardContent>
@@ -118,7 +118,7 @@ export default function IncomeStatementPage() {
         {["daily", "weekly", "monthly", "yearly"].map((tab) => (
           <Button
             key={tab}
-            variant={activeTab === tab ? "default" : "outline"}
+            variant={activeTab === tab ? "default" : "secondary"}
             onClick={() => setActiveTab(tab as any)}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -129,7 +129,7 @@ export default function IncomeStatementPage() {
       <CardContent className="mt-4">
         <Table>
           <TableHeader>
-            <TableRow className="bg-slate-600 text-white">
+            <TableRow className="bg-primary text-white">
               <TableHead>{activeTab === "daily" ? "Date" : activeTab === "weekly" ? "Week" : activeTab === "monthly" ? "Month" : "Year"}</TableHead>
               <TableHead className="text-right">Total Purchased</TableHead>
               <TableHead className="text-right">Profit</TableHead>

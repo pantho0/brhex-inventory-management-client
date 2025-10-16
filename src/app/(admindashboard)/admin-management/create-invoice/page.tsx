@@ -236,7 +236,7 @@ export default function CreateInvoice() {
       {/* Cart Table */}
       <Table>
         <TableCaption>Scanned/Added Products</TableCaption>
-        <TableHeader className="bg-slate-500">
+        <TableHeader className="bg-primary">
           <TableRow >
             <TableHead>Product Name</TableHead>
             <TableHead>Serial Number</TableHead>
@@ -310,10 +310,10 @@ export default function CreateInvoice() {
         </TableFooter>
       </Table>
 
-      <div className="mt-6">
+      <div className="mt-6 flex justify-center">
         <Button
           onClick={handleSubmitInvoice}
-          className="bg-green-600 cursor-pointer text-white"
+          className="bg-primary cursor-pointer text-white"
         >
           Submit Invoice
         </Button>
