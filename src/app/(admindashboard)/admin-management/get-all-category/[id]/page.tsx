@@ -16,7 +16,7 @@ function UpdateCategory({ params }: { params: Promise<{ id: string }> }) {
   const onSubmit = (data: any) => {
     const toastId = toast.loading("Updating category...");
     const updatedData = {
-      name: data.name.toLowerCase(),
+      name: data.name.toLowerCase().trim(),
     };
     updateCategory(
       { id, categoryData: updatedData },
