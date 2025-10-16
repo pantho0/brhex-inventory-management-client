@@ -12,15 +12,19 @@ function AddCategoryPage() {
 
   const onSubmit = (data: any) => {
     const toastID = toast.loading("Adding category...");
-    handleAddCategory(data, {
+    const trimmedData = {
+      name : data.name.toLowerCase().trim()
+    }
+    
+    handleAddCategory(trimmedData, {
       onSuccess: () => {
         toast.success("Category added successfully", {
           id: toastID,
           duration: 2000,
         });
       },
-      onError: () => {
-        toast.error("Failed to add category", { id: toastID, duration: 2000 });
+      onError: (error:any) => {
+        toast.error(error?.message || "Failed to add category", { id: toastID, duration: 2000 });
       },
     });
   };
