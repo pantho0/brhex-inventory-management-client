@@ -67,6 +67,23 @@ export const salesSummary = async (periodsData: any) => {
   }
 };
 
+export const incomeStatement = async (periodsData: any) => {
+  try {
+    const res = await axiosInstance.post("/invoice/income-statement", periodsData);
+    if (!res.data.success) {
+      throw new Error(res.data.message || "Error getting income statement");
+    }
+    return res.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message ||
+        error.message ||
+        "Error getting income statement"
+    );
+  }
+};
+
+
 export const updatePayment = async (invoiceID: string, paymentData: any) => {
   try {
     const res = await axiosInstance.put(

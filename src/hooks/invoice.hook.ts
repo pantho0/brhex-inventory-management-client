@@ -2,6 +2,7 @@ import {
   createInvoice,
   getAllInvoice,
   getInvoiceById,
+  incomeStatement,
   salesSummary,
   updatePayment,
 } from "@/services/invoice";
@@ -33,6 +34,13 @@ export const useSalesSummary = () => {
   return useMutation({
     mutationKey: ["sales-summary"],
     mutationFn: async (periodsData: any) => await salesSummary(periodsData),
+  });
+};
+
+export const useIncomeStatement = () => {
+  return useMutation({
+    mutationKey: ["income-statement"],
+    mutationFn: async (periodsData: any) => await incomeStatement(periodsData),
   });
 };
 
