@@ -190,6 +190,7 @@ export default function CreateInvoice() {
             id="discount"
             type="number"
             // value={discount}
+            onWheel={(e) => e.currentTarget.blur()}
             onChange={(e) => setDiscount(Number(e.target.value))}
             placeholder="Discount"
           />
@@ -200,6 +201,7 @@ export default function CreateInvoice() {
           <Input
             id="tax"
             type="number"
+            onWheel={(e) => e.currentTarget.blur()}
             // value={tax}
             onChange={(e) => setTax(Number(e.target.value))}
             placeholder="Tax"
@@ -211,6 +213,7 @@ export default function CreateInvoice() {
           <Input
             id="paidAmount"
             type="number"
+            onWheel={(e) => e.currentTarget.blur()}
             value={paidAmount}
             onChange={(e) => setPaidAmount(Number(e.target.value))}
             placeholder="Paid Amount"
