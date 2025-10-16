@@ -47,6 +47,7 @@ function CustomInput({
               type={type}
               placeholder={placeholder}
               className="w-full"
+              onWheel={(e) => e.currentTarget.blur()}
               required={required}
               {...field}
               disabled={disabled}
