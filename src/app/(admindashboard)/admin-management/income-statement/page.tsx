@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -16,24 +16,34 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { saveAs } from "file-saver";
 import { useIncomeStatement } from "@/hooks/invoice.hook";
 
-// --- CSV Export Utility ---
+
+// CSV Export
 const exportToCSV = (data: any[], totalSummary: any, fileName: string) => {
-  const headers = ["Date / Period", "Total Purchased", "Profit", "Invoices"];
+  const headers = ["Date", "Total Purchased", "Profit", "Invoices"];
   const rows = data.map((item) => [
     item.periodLabel,
-    item.totalPurchasedPrice.toLocaleString(),
-    item.profit.toLocaleString(),
+    item.totalPurchasedPrice,
+    item.profit,
     item.invoices,
   ]);
 
+  // Add total summary row
   rows.push([
     "Total Summary",
-    totalSummary.totalPurchasedPrice.toLocaleString(),
-    totalSummary.profit.toLocaleString(),
+    totalSummary.totalPurchasedPrice,
+    totalSummary.profit,
     totalSummary.invoices,
   ]);
 
@@ -48,29 +58,49 @@ const exportToCSV = (data: any[], totalSummary: any, fileName: string) => {
 };
 
 export default function IncomeStatementPage() {
-  const { mutate: fetchIncomeStatement, data: fetchedData } = useIncomeStatement();
+  const { mutate: handleIncomeSummary, data: fetchedData } = useIncomeStatement();
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"daily" | "weekly" | "monthly" | "yearly">("daily");
 
   const companyName = "Brother's Computer & Communication";
+  const currentYear = new Date().getFullYear();
+  const [selectedMonth, setSelectedMonth] = useState<number>(
+    new Date().getMonth()
+  );
+  const [selectedYear, setSelectedYear] = useState<number>(currentYear);
+
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
 
   useEffect(() => {
-    fetchIncomeStatement({ periods: ["daily", "weekly", "monthly", "yearly"] });
+    handleIncomeSummary({ periods: ["daily", "weekly", "monthly", "yearly"] });
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
-  }, [fetchIncomeStatement]);
+  }, [handleIncomeSummary]);
 
-  const statementData = useMemo(() => fetchedData?.data?.summary || {}, [fetchedData]);
- 
+  const incomeData = fetchedData?.data;
 
-  // --- Data for the active tab ---
-  const filteredData = useMemo(() => statementData[activeTab] || [], [statementData, activeTab]);
+  const filteredData = useMemo(() => {
+    if (!incomeData?.summary?.daily) return [];
+    return incomeData.summary.daily.filter((d: any) => {
+      const date = new Date(d.periodLabel);
+      return (
+        date.getMonth() === selectedMonth && date.getFullYear() === selectedYear
+      );
+    });
+  }, [incomeData, selectedMonth, selectedYear]);
 
-  // --- Totals for current tab ---
   const totalSummary = useMemo(() => {
-    const totalPurchasedPrice = filteredData.reduce((sum: any, d: any) => sum + d.totalPurchasedPrice, 0);
+    const totalPurchasedPrice = filteredData.reduce(
+      (sum: any, d: any) => sum + d.totalPurchasedPrice,
+      0
+    );
     const profit = filteredData.reduce((sum: any, d: any) => sum + d.profit, 0);
-    const invoices = filteredData.reduce((sum: any, d: any) => sum + d.invoices, 0);
+    const invoices = filteredData.reduce(
+      (sum: any, d: any) => sum + d.invoices,
+      0
+    );
     return { totalPurchasedPrice, profit, invoices };
   }, [filteredData]);
 
@@ -84,6 +114,11 @@ export default function IncomeStatementPage() {
           <Skeleton className="h-4 w-48 bg-primary" />
         </CardHeader>
         <CardContent>
+          <div className="flex gap-4 mb-6">
+            <Skeleton className="h-10 w-32 bg-primary" />
+            <Skeleton className="h-10 w-24 bg-primary" />
+            <Skeleton className="h-10 w-36 bg-primary" />
+          </div>
           <div className="space-y-2">
             {[...Array(8)].map((_, i) => (
               <Skeleton key={i} className="h-8 w-full rounded-md bg-primary" />
@@ -99,67 +134,101 @@ export default function IncomeStatementPage() {
       <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <CardTitle className="text-xl font-bold">{companyName}</CardTitle>
-          <p className="text-gray-500 text-sm">Income Statement</p>
+          <p className="text-gray-500 text-sm">
+            Income Report for {months[selectedMonth]} {selectedYear}
+          </p>
         </div>
 
-        <Button
-          variant="default"
-          className="mt-2 sm:mt-0"
-          onClick={() =>
-            exportToCSV(filteredData, totalSummary, `Income_Statement_${activeTab}`)
-          }
-        >
-          Export as CSV
-        </Button>
+        <div className="flex items-center gap-3">
+          <div>
+            <Label className="text-sm">Month</Label>
+            <Select
+              value={selectedMonth.toString()}
+              onValueChange={(v) => setSelectedMonth(parseInt(v))}
+            >
+              <SelectTrigger className="w-[130px]">
+                <SelectValue placeholder="Select Month" />
+              </SelectTrigger>
+              <SelectContent>
+                {months.map((m, i) => (
+                  <SelectItem key={i} value={i.toString()}>
+                    {m}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label className="text-sm">Year</Label>
+            <Select
+              value={selectedYear.toString()}
+              onValueChange={(v) => setSelectedYear(parseInt(v))}
+            >
+              <SelectTrigger className="w-[100px]">
+                <SelectValue placeholder="Select Year" />
+              </SelectTrigger>
+              <SelectContent>
+                {[currentYear - 1, currentYear, currentYear + 1].map((y) => (
+                  <SelectItem key={y} value={y.toString()}>
+                    {y}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <Button
+            variant="default"
+            className="mt-[16px]"
+            onClick={() =>
+              exportToCSV(
+                filteredData,
+                totalSummary,
+                `Daily_Income_Report_${months[selectedMonth]}_${selectedYear}`
+              )
+            }
+          >
+            Export as CSV
+          </Button>
+        </div>
       </CardHeader>
 
-      {/* Tabs */}
-      <div className="flex gap-4 mt-4">
-        {["daily", "weekly", "monthly", "yearly"].map((tab) => (
-          <Button
-            key={tab}
-            variant={activeTab === tab ? "default" : "secondary"}
-            onClick={() => setActiveTab(tab as any)}
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-          </Button>
-        ))}
-      </div>
-
-      <CardContent className="mt-4">
+      <CardContent>
         <Table>
           <TableHeader>
             <TableRow className="bg-primary text-white">
-              <TableHead>{activeTab === "daily" ? "Date" : activeTab === "weekly" ? "Week" : activeTab === "monthly" ? "Month" : "Year"}</TableHead>
+              <TableHead>Date</TableHead>
               <TableHead className="text-right">Total Purchased</TableHead>
               <TableHead className="text-right">Profit</TableHead>
               <TableHead className="text-right">Invoices</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredData.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={4} className="text-center text-gray-500">
-                  No data available
+            {filteredData.map((item: any, index: number) => (
+              <TableRow key={index}>
+                <TableCell>{item.periodLabel}</TableCell>
+                <TableCell className="text-right">
+                  {item.totalPurchasedPrice.toLocaleString()}
                 </TableCell>
+                <TableCell className="text-right font-medium">
+                  {item.profit.toLocaleString()}
+                </TableCell>
+                <TableCell className="text-right">{item.invoices}</TableCell>
               </TableRow>
-            ) : (
-              filteredData.map((item: any, index: any) => (
-                <TableRow key={index}>
-                  <TableCell>{item.periodLabel || "N/A"}</TableCell>
-                  <TableCell className="text-right">{item.totalPurchasedPrice.toLocaleString()}</TableCell>
-                  <TableCell className="text-right">{item.profit.toLocaleString()}</TableCell>
-                  <TableCell className="text-right">{item.invoices}</TableCell>
-                </TableRow>
-              ))
-            )}
+            ))}
 
-            {/* Total Summary Row */}
             <TableRow className="font-semibold bg-gray-100">
               <TableCell>Total Summary</TableCell>
-              <TableCell className="text-right">{totalSummary.totalPurchasedPrice.toLocaleString()}</TableCell>
-              <TableCell className="text-right">{totalSummary.profit.toLocaleString()}</TableCell>
-              <TableCell className="text-right">{totalSummary.invoices}</TableCell>
+              <TableCell className="text-right">
+                {totalSummary.totalPurchasedPrice.toLocaleString()}
+              </TableCell>
+              <TableCell className="text-right">
+                {totalSummary.profit.toLocaleString()}
+              </TableCell>
+              <TableCell className="text-right">
+                {totalSummary.invoices}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
