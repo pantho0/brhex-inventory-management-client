@@ -215,7 +215,7 @@ export default function CreateInvoice() {
             id="paidAmount"
             type="number"
             onWheel={(e) => e.currentTarget.blur()}
-            value={paidAmount}
+            // value={paidAmount}
             onChange={(e) => setPaidAmount(Number(e.target.value))}
             placeholder="Paid Amount"
           />

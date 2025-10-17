@@ -50,8 +50,8 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
         variant={isActive ? "secondary" : "ghost"}
         className={`w-full justify-start rounded-lg transition-colors ${
           isActive
-            ? "bg-gray-700 text-white hover:bg-gray-600"
-            : "text-gray-300 hover:bg-gray-700 hover:text-white"
+            ? "bg-primary text-white hover:bg-primary/80"
+            : "text-gray-300 hover:bg-primary/90 hover:text-white"
         }`}
         onClick={handleClick}
       >
