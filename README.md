@@ -100,7 +100,7 @@ This frontend is built using a modern stack focused on type safety, performance,
 ---
 
 <p align="center">
-  <img src="https://img.shields.io/badge/ACTION%20REQUIRED-Create%20a%20.env.local%20file%20and%20follow%20.example-env-red?style=for-the-badge&labelColor=black"/>
+  <img src="https://img.shields.io/badge/ACTION%20REQUIRED-Create%20a%20.env.local%20file%20and%20follow%20.env.example.local-red?style=for-the-badge&labelColor=black"/>
 </p>
 
 ### 🔑 Default Admin Credentials
