@@ -11,7 +11,7 @@ A complete inventory, sales, and invoice management system client built using **
 
 The system's data structure is built on a clean relational model.
 
-![BRHEX Inventory ER Diagram](./docs/er-diagram.png)
+![BRHEX Inventory ER Diagram](./docs/erdiagram.png)
 
 ---
 
@@ -100,7 +100,7 @@ This frontend is built using a modern stack focused on type safety, performance,
 ---
 
 <p align="center">
-  <img src="https://img.shields.io/badge/ACTION%20REQUIRED-Create%20a%20.env.local%20file%20and%20follow%20.env.example-red?style=for-the-badge&labelColor=black"/>
+  <img src="https://img.shields.io/badge/ACTION%20REQUIRED-Create%20a%20.env.local%20file%20and%20follow%20.example-env-red?style=for-the-badge&labelColor=black"/>
 </p>
 
 ### 🔑 Default Admin Credentials
