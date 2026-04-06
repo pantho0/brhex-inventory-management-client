@@ -32,8 +32,10 @@ function GetAllInvoicePage() {
 
   const { data: fetchedInvoices, isPending } = useGetAllInvoice(query);
 
+
   // @ts-ignore
   const invoices = fetchedInvoices?.data?.result;
+
 
   // @ts-ignore
   const meta = fetchedInvoices?.data?.meta;
@@ -130,6 +132,8 @@ function GetAllInvoicePage() {
                 <TableHead className="text-right">Total Purchased</TableHead>
                 <TableHead className="text-right">Profit</TableHead>
                 <TableHead className="text-right">Paid</TableHead>
+                <TableHead className="text-right">Return Amount</TableHead>
+
                 <TableHead className="text-right">Due/Return</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="text-right">Action</TableHead>
@@ -153,13 +157,13 @@ function GetAllInvoicePage() {
                     <TableCell className="text-right font-semibold text-black">{formatNumber(inv?.total)}</TableCell>
                     <TableCell className="text-right text-black font-medium">{formatNumber(inv?.totalPurchasedPrice)}</TableCell>
                     <TableCell
-                      className={`text-right font-medium ${
-                        (inv?.profit ?? 0) >= 0 ? "text-green-700" : "text-red-600"
-                      }`}
+                      className={`text-right font-medium ${(inv?.profit ?? 0) >= 0 ? "text-green-700" : "text-red-600"
+                        }`}
                     >
                       {formatNumber(inv?.profit)}
                     </TableCell>
                     <TableCell className="text-right text-black">{formatNumber(inv?.paidAmount)}</TableCell>
+                    <TableCell className="text-right text-black">{formatNumber(inv?.returnAmount)}</TableCell>
                     <TableCell className="text-right">
                       <Badge
                         variant="outline"
@@ -167,15 +171,15 @@ function GetAllInvoicePage() {
                           isReturn
                             ? "bg-blue-100 text-blue-800 border-blue-200"
                             : due > 0
-                            ? "bg-red-100 text-red-800 border-red-200"
-                            : "bg-green-100 text-green-800 border-green-200"
+                              ? "bg-red-100 text-red-800 border-red-200"
+                              : "bg-green-100 text-green-800 border-green-200"
                         }
                       >
                         {isReturn
                           ? `Return ${formatNumber(Math.abs(due))}`
                           : due > 0
-                          ? `Due ${formatNumber(due)}`
-                          : "Clear"}
+                            ? `Due ${formatNumber(due)}`
+                            : "Clear"}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -185,8 +189,8 @@ function GetAllInvoicePage() {
                           status === "paid"
                             ? "bg-green-700 hover:bg-green-700/90 text-white"
                             : status === "partial"
-                            ? "bg-yellow-200 hover:bg-yellow-200/90 text-yellow-900"
-                            : "bg-gray-200 hover:bg-gray-200/90 text-gray-900"
+                              ? "bg-yellow-200 hover:bg-yellow-200/90 text-yellow-900"
+                              : "bg-gray-200 hover:bg-gray-200/90 text-gray-900"
                         }
                       >
                         {(inv?.paymentStatus || "").toUpperCase()}

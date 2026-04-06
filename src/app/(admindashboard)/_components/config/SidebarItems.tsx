@@ -1,4 +1,4 @@
-import { LucideIcon,  Trash, Utensils } from "lucide-react";
+import { LucideIcon,  RotateCcw, Trash, Utensils } from "lucide-react";
 import { FileText, HelpCircle, User, UserCog } from "lucide-react";
 
 export interface NavItem {
@@ -73,6 +73,18 @@ export const sidebarAdminNavItems: NavSection = {
       icon: UserCog,
     },
   ],
+  order: [
+    {
+      href: "/admin-management/create-order",
+      label: "Create Order",
+      icon: FileText,
+    },
+    {
+      href: "/admin-management/get-all-orders",
+      label: "View All Orders",
+      icon: UserCog,
+    },
+  ],
   account: [
     {
       href: "/admin-management/profile",
@@ -88,6 +100,18 @@ export const sidebarAdminNavItems: NavSection = {
       href: "/admin-management/user-management",
       label: "User Management",
       icon: UserCog,
+    },
+  ],
+  return_item: [
+    {
+      href: "/admin-management/return-product",
+      label: "Return Product",
+      icon: RotateCcw,
+    },
+    {
+      href: "/admin-management/view-all-returned-product",
+      label: "View All Returned Product",
+      icon: RotateCcw,
     },
   ],
   service: [
@@ -128,6 +152,17 @@ export const sidebarUserNavItems: NavSection = {
       label: "Profile",
       icon: User,
     },
-   
+  ],
+  return_item: [
+    {
+      href: "/seller-management/return-product",
+      label: "Return Product",
+      icon: RotateCcw,
+    },
+    {
+      href: "/seller-management/view-all-returned-product",
+      label: "View All Returned Product",
+      icon: RotateCcw,
+    },
   ],
 };

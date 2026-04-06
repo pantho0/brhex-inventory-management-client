@@ -20,11 +20,11 @@ export default function UpdatePaymentPage() {
   const invoice =
     // @ts-ignore
     fetchedInvoices?.data?.result && fetchedInvoices.data.result.length > 0
-    // @ts-ignore
+      // @ts-ignore
       ? fetchedInvoices.data.result[0]
       : null;
 
-      console.log(invoice)
+
 
   const handleSearch = () => {
     if (invoiceNo.trim()) {

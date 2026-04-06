@@ -4,7 +4,6 @@ import CustomForm from "@/components/customform/CustomForm";
 import CustomInput from "@/components/customform/CustomInput";
 import { Button } from "@/components/ui/button";
 import { useAddUser } from "@/hooks/user.hook";
-import React from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -23,7 +22,6 @@ function CreateUserPage() {
         });
       },
     });
-    console.log(data);
   };
   return (
     <div className="text-black font-sans px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">

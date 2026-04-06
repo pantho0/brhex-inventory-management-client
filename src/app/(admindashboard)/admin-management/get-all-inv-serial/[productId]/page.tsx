@@ -43,8 +43,8 @@ const GetAllInvByProductSerial = ({
     useGetAllInventoryItemsByProductId(productId);
 
   const products = useMemo(() => data?.data ?? [], [data?.data]);
- 
- 
+
+
   const productName = products?.[0]?.product?.name || "";
 
 
@@ -145,6 +145,8 @@ const GetAllInvByProductSerial = ({
             <TableHead>SL No.</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Status</TableHead>
+            <TableHead>Total Meter</TableHead>
+            <TableHead>Remaining Meter</TableHead>
             <TableHead>P.Price</TableHead>
             <TableHead>S.Price</TableHead>
             <TableHead>Warranty</TableHead>
@@ -173,6 +175,12 @@ const GetAllInvByProductSerial = ({
                 >
                   {item?.status?.toUpperCase()}
                 </Badge>
+              </TableCell>
+              <TableCell className="font-medium text-black">
+                {item.totalMeters ?? "N/A"}
+              </TableCell>
+              <TableCell className="font-medium text-black">
+                {item.remainingMeters ?? "N/A"}
               </TableCell>
               <TableCell className="font-medium text-black">
                 {item.purchased_price}

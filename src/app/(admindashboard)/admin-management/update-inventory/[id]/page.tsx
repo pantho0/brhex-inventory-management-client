@@ -32,13 +32,28 @@ function UpdateInventory({ params }: { params: Promise<{ id: string }> }) {
   const defaultValue = {
     product: data?.data?.product?._id,
     serialNumber: data?.data?.serialNumber,
+    purchased_price: data?.data?.purchased_price,
     price: data?.data?.price,
+    totalMeters: data?.data?.totalMeters,
+    warranty: data?.data?.warranty,
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (updatedData) => {
     const toastId = toast.loading("Updating inventory item...");
+
+    const payload = {
+      ...updatedData,
+      price: Number(updatedData.price),
+      purchased_price: updatedData.purchased_price
+        ? Number(updatedData.purchased_price)
+        : undefined,
+      totalMeters: updatedData.totalMeters
+        ? Number(updatedData.totalMeters)
+        : undefined,
+    };
+
     handleUpdateInventory(
-      { id: updateDataId, inventoryData: updatedData },
+      { id: updateDataId, inventoryData: payload },
       {
         onSuccess: () => {
           toast.success("Inventory item updated successfully", { id: toastId });
@@ -85,10 +100,31 @@ function UpdateInventory({ params }: { params: Promise<{ id: string }> }) {
             />
 
             <CustomInput
+              name="purchased_price"
+              label="Purchased Price"
+              type="number"
+              placeholder="Purchased Price"
+            />
+
+            <CustomInput
               name="price"
               label="Price"
               type="number"
               placeholder="Price"
+            />
+
+            <CustomInput
+              name="totalMeters"
+              label="Total Meters (Optional)"
+              type="number"
+              placeholder="Total Meters (e.g. 200)"
+            />
+
+            <CustomInput
+              name="warranty"
+              label="Warranty (Optional)"
+              type="text"
+              placeholder="e.g. 1 year"
             />
             <Button
               disabled={isPending || isUpdatePending}

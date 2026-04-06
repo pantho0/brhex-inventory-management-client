@@ -10,34 +10,34 @@ import { Button } from "@/components/ui/button";
 
 export default function CreateBarcodePage() {
 
- const generateBarcode = async () => {
-  try {
-    const response = await fetch("https://brhex-inventory-management.vercel.app/api/v1/barcode/generate", {
-      method: "POST",
-    });
+  const generateBarcode = async () => {
+    try {
+      const response = await fetch("https://brhex-inventory-customer-preview.vercel.app/api/v1/barcode/generate", {
+        method: "POST",
+      });
 
-    if (!response.ok) throw new Error("Failed to generate barcodes PDF");
+      if (!response.ok) throw new Error("Failed to generate barcodes PDF");
 
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "barcodes.pdf";
-    a.click();
-    window.URL.revokeObjectURL(url);
-  } catch (error) {
-    console.error("Error downloading PDF:", error);
-  }
-};
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "barcodes.pdf";
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+    }
+  };
 
-    return  <div className="text-black font-sans px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
-      <TitleWrapper title="Create Barcode" />
+  return <div className="text-black font-sans px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
+    <TitleWrapper title="Create Barcode" />
 
-      <h1 className="text-2xl">For Create Barcode PDF</h1>
+    <h1 className="text-2xl">For Create Barcode PDF</h1>
 
-      <Button onClick={generateBarcode} className="bg-primary w-full cursor-pointer ">
+    <Button onClick={generateBarcode} className="bg-primary w-full cursor-pointer ">
       Generate Barcodes
     </Button>
-    </div>
+  </div>
 }

@@ -15,7 +15,7 @@ import {
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useSalesSummary } from "@/hooks/invoice.hook";
-import { DollarSign, CheckCircle, AlertCircle } from "lucide-react"; // Importing icons
+import { DollarSign, CheckCircle, AlertCircle, RotateCcw } from "lucide-react"; // Importing icons
 
 const SalesSummaryCharts = () => {
   const { mutate: handleSalesSummary, data: fetchedData } = useSalesSummary();
@@ -39,7 +39,7 @@ const SalesSummaryCharts = () => {
   return (
     <div>
       {/* --- START: Summary Cards Section --- */}
-      <div className="grid gap-4 md:grid-cols-3 mb-6">
+      <div className="grid gap-4 md:grid-cols-2 mb-6">
         <Card className="rounded-2xl shadow-md bg-indigo-50">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Sales</CardTitle>
@@ -82,6 +82,20 @@ const SalesSummaryCharts = () => {
             </p>
           </CardContent>
         </Card>
+        <Card className="rounded-2xl shadow-md bg-red-50">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Return</CardTitle>
+            <RotateCcw className="h-4 w-4 text-red-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {formatCurrency(data.cumulativeTotals.totalReturn)}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Total items returned
+            </p>
+          </CardContent>
+        </Card>
       </div>
       {/* --- END: Summary Cards Section --- */}
 
@@ -115,6 +129,12 @@ const SalesSummaryCharts = () => {
                   stroke="#ff7300"
                   name="Total Due"
                 />
+                <Line
+                  type="monotone"
+                  dataKey="totalReturn"
+                  stroke="#ef4444"
+                  name="Total Return"
+                />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -134,6 +154,7 @@ const SalesSummaryCharts = () => {
                 <Bar dataKey="totalSales" fill="#8884d8" name="Total Sales" />
                 <Bar dataKey="totalPaid" fill="#82ca9d" name="Total Paid" />
                 <Bar dataKey="totalDue" fill="#ff7300" name="Total Due" />
+                <Bar dataKey="totalReturn" fill="#ef4444" name="Total Return" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -168,6 +189,12 @@ const SalesSummaryCharts = () => {
                   stroke="#ff7300"
                   name="Total Due"
                 />
+                <Line
+                  type="monotone"
+                  dataKey="totalReturn"
+                  stroke="#ef4444"
+                  name="Total Return"
+                />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -187,6 +214,7 @@ const SalesSummaryCharts = () => {
                 <Bar dataKey="totalSales" fill="#8884d8" name="Total Sales" />
                 <Bar dataKey="totalPaid" fill="#82ca9d" name="Total Paid" />
                 <Bar dataKey="totalDue" fill="#ff7300" name="Total Due" />
+                <Bar dataKey="totalReturn" fill="#ef4444" name="Total Return" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>

@@ -69,6 +69,9 @@ export default function CreateInvoice() {
               warranty: product.warranty,
               purchased_price: product.purchased_price,
               price: product.price,
+              totalMeters: product.totalMeters,
+              remainingMeters: product.remainingMeters,
+              saleMeters: product.totalMeters !== undefined ? 0 : undefined,
             },
           ];
         });
@@ -99,10 +102,25 @@ export default function CreateInvoice() {
     setCart((prev) => prev.filter((item) => item.serialNumber !== serial));
   };
 
+  // Handle sale meters change
+  const handleSaleMeterChange = (serial: string, value: number) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item.serialNumber === serial ? { ...item, saleMeters: value } : item
+      )
+    );
+  };
+
   // Totals calculation
   const { subtotal, taxAmount, grandTotal, dueAmount, returnAmount } =
     useMemo(() => {
-      const subtotal = cart.reduce((acc, item) => acc + item.price, 0);
+      const subtotal = cart.reduce((acc, item) => {
+        const itemTotal =
+          item.totalMeters !== undefined
+            ? item.price * (item.saleMeters || 0)
+            : item.price;
+        return acc + itemTotal;
+      }, 0);
       const taxAmount = ((subtotal - discount) * tax) / 100;
       const grandTotal = subtotal - discount + taxAmount;
       const dueAmount = Math.max(grandTotal - paidAmount, 0);
@@ -237,11 +255,15 @@ export default function CreateInvoice() {
       <Table>
         <TableCaption>Scanned/Added Products</TableCaption>
         <TableHeader className="bg-primary">
-          <TableRow >
-            <TableHead>Product Name</TableHead>
-            <TableHead>Serial Number</TableHead>
-            <TableHead className="text-right">Price</TableHead>
-            <TableHead className="text-center">Action</TableHead>
+          <TableRow>
+            <TableHead className="text-white">Product Name</TableHead>
+            <TableHead className="text-white">Serial Number</TableHead>
+            <TableHead className="text-white">Total Meter</TableHead>
+            <TableHead className="text-white">Remaining Meter</TableHead>
+            <TableHead className="text-white">Unit Price</TableHead>
+            <TableHead className="text-white">Sale Meter</TableHead>
+            <TableHead className="text-right text-white">Price</TableHead>
+            <TableHead className="text-center text-white">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -249,8 +271,34 @@ export default function CreateInvoice() {
             <TableRow key={idx}>
               <TableCell>{item.productName}</TableCell>
               <TableCell>{item.serialNumber}</TableCell>
+              <TableCell>{item.totalMeters ?? "N/A"}</TableCell>
+              <TableCell>{item.remainingMeters ?? "N/A"}</TableCell>
+              <TableCell>৳{item.price.toFixed(2)}</TableCell>
+              <TableCell>
+                {item.totalMeters !== undefined ? (
+                  <Input
+                    type="number"
+                    min={0}
+                    max={item.remainingMeters}
+                    value={item.saleMeters}
+                    onChange={(e) =>
+                      handleSaleMeterChange(
+                        item.serialNumber,
+                        Number(e.target.value)
+                      )
+                    }
+                    className="w-20"
+                  />
+                ) : (
+                  "N/A"
+                )}
+              </TableCell>
               <TableCell className="text-right">
-                ৳{item.price.toFixed(2)}
+                ৳
+                {(item.totalMeters !== undefined
+                  ? item.price * (item.saleMeters || 0)
+                  : item.price
+                ).toFixed(2)}
               </TableCell>
               <TableCell className="text-center">
                 <Button
@@ -266,43 +314,43 @@ export default function CreateInvoice() {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={3}>Subtotal</TableCell>
+            <TableCell colSpan={6}>Subtotal</TableCell>
             <TableCell className="text-right">৳{subtotal.toFixed(2)}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={3}>Discount</TableCell>
+            <TableCell colSpan={6}>Discount</TableCell>
             <TableCell className="text-right">
               -৳{discount.toFixed(2)}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={3}>Tax ({tax}%)</TableCell>
+            <TableCell colSpan={6}>Tax ({tax}%)</TableCell>
             <TableCell className="text-right">
               +৳{taxAmount.toFixed(2)}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={3} className="font-bold">
+            <TableCell colSpan={6} className="font-bold">
               Grand Total
             </TableCell>
             <TableCell className="text-right font-bold">
-             ৳{grandTotal.toFixed(2)}
+              ৳{grandTotal.toFixed(2)}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={3}>Paid Amount</TableCell>
+            <TableCell colSpan={6}>Paid Amount</TableCell>
             <TableCell className="text-right">
               ৳{paidAmount.toFixed(2)}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={3}>Due Amount</TableCell>
+            <TableCell colSpan={6}>Due Amount</TableCell>
             <TableCell className="text-right">
               ৳{dueAmount.toFixed(2)}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell colSpan={3}>Return Amount</TableCell>
+            <TableCell colSpan={6}>Return Amount</TableCell>
             <TableCell className="text-right text-green-600">
               ৳{returnAmount.toFixed(2)}
             </TableCell>

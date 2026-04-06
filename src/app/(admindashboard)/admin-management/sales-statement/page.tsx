@@ -30,10 +30,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 // --- Utility: CSV Export ---
 const exportToCSV = (data: any[], totalSummary: any, fileName: string) => {
-  const headers = ["Date", "Total Paid", "Total Due", "Total Sales", "Invoices"];
+  const headers = ["Date", "Total Paid", "Total Return", "Total Due", "Total Sales", "Invoices"];
   const rows = data.map((item) => [
     item.periodLabel,
     item.totalPaid,
+    item.totalReturn,
     item.totalDue,
     item.totalSales,
     item.invoices,
@@ -43,6 +44,7 @@ const exportToCSV = (data: any[], totalSummary: any, fileName: string) => {
   rows.push([
     "Total Summary",
     totalSummary.totalPaid,
+    totalSummary.totalReturn,
     totalSummary.totalDue,
     totalSummary.totalSales,
     totalSummary.invoices,
@@ -97,10 +99,11 @@ export default function SalesStatementPage() {
   // --- Compute Total Summary ---
   const totalSummary = useMemo(() => {
     const totalPaid = filteredData.reduce((sum: any, d: any) => sum + d.totalPaid, 0);
+    const totalReturn = filteredData.reduce((sum: any, d: any) => sum + d.totalReturn, 0);
     const totalDue = filteredData.reduce((sum: any, d: any) => sum + d.totalDue, 0);
     const totalSales = filteredData.reduce((sum: any, d: any) => sum + d.totalSales, 0);
     const invoices = filteredData.reduce((sum: any, d: any) => sum + d.invoices, 0);
-    return { totalPaid, totalDue, totalSales, invoices };
+    return { totalPaid, totalReturn, totalDue, totalSales, invoices };
   }, [filteredData]);
 
   // --- Skeleton Loader ---
@@ -200,6 +203,7 @@ export default function SalesStatementPage() {
             <TableRow className="bg-primary text-white">
               <TableHead>Date</TableHead>
               <TableHead className="text-right">Total Paid</TableHead>
+              <TableHead className="text-right">Total Return</TableHead>
               <TableHead className="text-right">Total Due</TableHead>
               <TableHead className="text-right">Total Sales</TableHead>
               <TableHead className="text-right">Invoices</TableHead>
@@ -211,6 +215,9 @@ export default function SalesStatementPage() {
                 <TableCell>{item.periodLabel}</TableCell>
                 <TableCell className="text-right">
                   {item.totalPaid.toLocaleString()}
+                </TableCell>
+                <TableCell className="text-right">
+                  {item.totalReturn.toLocaleString()}
                 </TableCell>
                 <TableCell className="text-right">
                   {item.totalDue.toLocaleString()}
@@ -227,6 +234,9 @@ export default function SalesStatementPage() {
               <TableCell>Total Summary</TableCell>
               <TableCell className="text-right">
                 {totalSummary.totalPaid.toLocaleString()}
+              </TableCell>
+              <TableCell className="text-right">
+                {totalSummary.totalReturn.toLocaleString()}
               </TableCell>
               <TableCell className="text-right">
                 {totalSummary.totalDue.toLocaleString()}

@@ -77,8 +77,8 @@ export const upDatePassword = async (updatedCredentials: FieldValues) => {
     console.error("Password update error:", error);
     throw new Error(
       error.response?.data?.message ||
-        error.message ||
-        "An error occurred during password update"
+      error.message ||
+      "An error occurred during password update"
     );
   }
 };

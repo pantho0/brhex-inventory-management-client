@@ -95,7 +95,9 @@ export const POSReceipt = React.forwardRef<HTMLDivElement, POSReceiptProps>(
           <thead>
             <tr>
               <th style={thStyles}>Item</th>
+              <th style={{ ...thStyles, textAlign: "center" }}>Qty</th>
               <th style={{ ...thStyles, textAlign: "right" }}>Price</th>
+              <th style={{ ...thStyles, textAlign: "right" }}>Total</th>
             </tr>
           </thead>
           <tbody>
@@ -104,13 +106,15 @@ export const POSReceipt = React.forwardRef<HTMLDivElement, POSReceiptProps>(
                 <td style={tdStyles}>
                   {item.productName}
                   <br />
-                  <span style={{ fontSize: "10px" }}>
-                    SN: {item.serialNumber}
+                  <span style={{ fontSize: "9px" }}>
+                    SN: {item.serialNumber} | W: {item.warranty}
                   </span>
-                  <br />
-                  <span style={{ fontSize: "10px" }}>
-                    Warranty: {item.warranty}
-                  </span>
+                </td>
+                <td style={{ ...tdStyles, textAlign: "center", verticalAlign: "top" }}>
+                  {item.saleMeters ? `${item.saleMeters}m` : "N/A"}
+                </td>
+                <td style={{ ...tdStyles, textAlign: "right", verticalAlign: "top" }}>
+                  {item.price.toFixed(2)}
                 </td>
                 <td
                   style={{
@@ -119,7 +123,7 @@ export const POSReceipt = React.forwardRef<HTMLDivElement, POSReceiptProps>(
                     verticalAlign: "top",
                   }}
                 >
-                  {item.price.toFixed(2)}
+                  {(item.price * (item.saleMeters || 1)).toFixed(2)}
                 </td>
               </tr>
             ))}

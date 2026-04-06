@@ -26,7 +26,6 @@ function AddInventoryItemPage() {
 
   const [serials, setSerials] = useState<string[]>([]);
   const [manualSerial, setManualSerial] = useState("");
-  console.log(serials);
   // ✅ Capture scanned serials
   useBarcodeScanner((code) => {
     const trimmed = code.trim();
@@ -66,11 +65,11 @@ function AddInventoryItemPage() {
     const payload = {
       product: data.product,
       serialNumber: serials, // ✅ send array
+      totalMeters: data.totalMeters ? Number(data.totalMeters) : undefined,
       purchased_price: Number(data.purchased_price),
       price: Number(data.price),
       warranty: data.warranty,
     };
-    console.log(payload);
     const toastId = toast.loading("Adding inventory items...");
     handleAddInventoryItem(payload, {
       onSuccess: () => {
@@ -80,8 +79,8 @@ function AddInventoryItemPage() {
       onError: (error: any) => {
         toast.error(
           error.response?.data?.message ||
-            error.message ||
-            "Error adding inventory items",
+          error.message ||
+          "Error adding inventory items",
           { id: toastId }
         );
       },
@@ -115,6 +114,13 @@ function AddInventoryItemPage() {
               type="number"
               placeholder="Price"
               required={true}
+            />
+
+            <CustomInput
+              name="totalMeters"
+              label="Total Meters (Optional)"
+              type="number"
+              placeholder="Total Meters (e.g. 200)"
             />
 
             <CustomInput

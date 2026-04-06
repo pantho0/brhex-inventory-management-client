@@ -1,6 +1,6 @@
 "use client";
 
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -28,7 +28,7 @@ const SettingsPage: React.FC = () => {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(
     "https://github.com/shadcn.png"
   ); // Dummy avatar
-  const {mutateAsync: updatePassword} = useUpdatePassword()
+  const { mutateAsync: updatePassword } = useUpdatePassword()
   const router = useRouter()
 
 
@@ -37,13 +37,12 @@ const SettingsPage: React.FC = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const toastId = toast.loading("Changing Password")
     updatePassword(data, {
-      onSuccess:()=>{
-        toast.success("Password Changed Successfully",{id:toastId})
+      onSuccess: () => {
+        toast.success("Password Changed Successfully", { id: toastId })
         router.push("/")
       },
-      onError:(error)=>{
-        console.log(error)
-        toast.error(error?.message || "Password Change Failed",{id:toastId})
+      onError: (error) => {
+        toast.error(error?.message || "Password Change Failed", { id: toastId })
       }
     })
   };
@@ -60,7 +59,7 @@ const SettingsPage: React.FC = () => {
 
   const handleAvatarUpload = () => {
     if (avatarFile) {
-      console.log("Uploading avatar:", avatarFile.name);
+
       // Implement avatar upload logic here
       alert("Avatar upload functionality not implemented yet.");
     } else {

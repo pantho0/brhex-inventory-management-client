@@ -31,9 +31,10 @@ import { useIncomeStatement } from "@/hooks/invoice.hook";
 
 // CSV Export
 const exportToCSV = (data: any[], totalSummary: any, fileName: string) => {
-  const headers = ["Date", "Total Purchased", "Profit", "Invoices"];
+  const headers = ["Date", "Total Sales", "Total Purchased", "Profit", "Invoices"];
   const rows = data.map((item) => [
     item.periodLabel,
+    item.totalSales,
     item.totalPurchasedPrice,
     item.profit,
     item.invoices,
@@ -42,6 +43,7 @@ const exportToCSV = (data: any[], totalSummary: any, fileName: string) => {
   // Add total summary row
   rows.push([
     "Total Summary",
+    totalSummary.totalSales,
     totalSummary.totalPurchasedPrice,
     totalSummary.profit,
     totalSummary.invoices,
@@ -92,16 +94,20 @@ export default function IncomeStatementPage() {
   }, [incomeData, selectedMonth, selectedYear]);
 
   const totalSummary = useMemo(() => {
+    const totalSales = filteredData.reduce(
+      (sum: any, d: any) => sum + (d.totalSales || 0),
+      0
+    );
     const totalPurchasedPrice = filteredData.reduce(
-      (sum: any, d: any) => sum + d.totalPurchasedPrice,
+      (sum: any, d: any) => sum + (d.totalPurchasedPrice || 0),
       0
     );
-    const profit = filteredData.reduce((sum: any, d: any) => sum + d.profit, 0);
+    const profit = filteredData.reduce((sum: any, d: any) => sum + (d.profit || 0), 0);
     const invoices = filteredData.reduce(
-      (sum: any, d: any) => sum + d.invoices,
+      (sum: any, d: any) => sum + (d.invoices || 0),
       0
     );
-    return { totalPurchasedPrice, profit, invoices };
+    return { totalSales, totalPurchasedPrice, profit, invoices };
   }, [filteredData]);
 
   if (loading) {
@@ -199,7 +205,8 @@ export default function IncomeStatementPage() {
           <TableHeader>
             <TableRow className="bg-primary text-white">
               <TableHead>Date</TableHead>
-              <TableHead className="text-right">Total Purchased</TableHead>
+              <TableHead className="text-right">Total Sales</TableHead>
+              <TableHead className="text-right">Purchase Price</TableHead>
               <TableHead className="text-right">Profit</TableHead>
               <TableHead className="text-right">Invoices</TableHead>
             </TableRow>
@@ -208,6 +215,9 @@ export default function IncomeStatementPage() {
             {filteredData.map((item: any, index: number) => (
               <TableRow key={index}>
                 <TableCell>{item.periodLabel}</TableCell>
+                <TableCell className="text-right">
+                  {item.totalSales.toLocaleString()}
+                </TableCell>
                 <TableCell className="text-right">
                   {item.totalPurchasedPrice.toLocaleString()}
                 </TableCell>
@@ -220,6 +230,9 @@ export default function IncomeStatementPage() {
 
             <TableRow className="font-semibold bg-gray-100">
               <TableCell>Total Summary</TableCell>
+              <TableCell className="text-right">
+                {totalSummary.totalSales.toLocaleString()}
+              </TableCell>
               <TableCell className="text-right">
                 {totalSummary.totalPurchasedPrice.toLocaleString()}
               </TableCell>

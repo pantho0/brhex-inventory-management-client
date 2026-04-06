@@ -283,6 +283,34 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
                       </AccordionContent>
                     </AccordionItem>
 
+                    {/* Order Management */}
+                    <AccordionItem value="order" className="border-b-0">
+                      <AccordionTrigger className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                        Order Management
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-1 px-4">
+                          {sidebarAdminNavItems.order.map((item: any) => (
+                            <NavItem key={item.href} {...item} />
+                          ))}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    {/* Return Management */}
+                    <AccordionItem value="return_item" className="border-b-0">
+                      <AccordionTrigger className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                        Return Item
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-1 px-4">
+                          {sidebarAdminNavItems.return_item.map((item: any) => (
+                            <NavItem key={item.href} {...item} />
+                          ))}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+
                     {/* Manage Account */}
                     <AccordionItem value="account" className="border-b-0">
                       <AccordionTrigger className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
@@ -342,6 +370,19 @@ export function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
                     </AccordionItem>
 
            
+                    {/* Return Management */}
+                    <AccordionItem value="return_item" className="border-b-0">
+                      <AccordionTrigger className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                        Return Item
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-1 px-4">
+                          {sidebarUserNavItems.return_item.map((item: any) => (
+                            <NavItem key={item.href} {...item} />
+                          ))}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
                   </Accordion>
                  }
                 </nav>
