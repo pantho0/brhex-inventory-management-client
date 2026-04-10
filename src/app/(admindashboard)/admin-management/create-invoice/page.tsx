@@ -147,6 +147,8 @@ export default function CreateInvoice() {
         toast.success("Invoice created successfully", { id: toastId });
         setCart([]);
         setCustomerName("");
+        setAddress("");
+        setMobile("");
         setDiscount(0);
         setTax(0);
         setPaidAmount(0);
@@ -208,7 +210,7 @@ export default function CreateInvoice() {
           <Input
             id="discount"
             type="number"
-            // value={discount}
+            value={discount}
             onWheel={(e) => e.currentTarget.blur()}
             onChange={(e) => setDiscount(Number(e.target.value))}
             placeholder="Discount"
@@ -221,7 +223,7 @@ export default function CreateInvoice() {
             id="tax"
             type="number"
             onWheel={(e) => e.currentTarget.blur()}
-            // value={tax}
+            value={tax}
             onChange={(e) => setTax(Number(e.target.value))}
             placeholder="Tax"
           />
@@ -233,7 +235,7 @@ export default function CreateInvoice() {
             id="paidAmount"
             type="number"
             onWheel={(e) => e.currentTarget.blur()}
-            // value={paidAmount}
+            value={paidAmount}
             onChange={(e) => setPaidAmount(Number(e.target.value))}
             placeholder="Paid Amount"
           />

@@ -11,7 +11,7 @@ import { toast } from "sonner";
 function CreateOrderPage() {
   const { mutate: handleCreateOrder, isPending } = useCreateOrder();
 
-  const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
+  const onSubmit = (data: any, methods: any) => {
     const payload = {
       ...data,
       balance: Number(data.balance),
@@ -21,6 +21,7 @@ function CreateOrderPage() {
     handleCreateOrder(payload, {
       onSuccess: () => {
         toast.success("Order created successfully", { id: toastId });
+        methods.reset();
       },
       onError: (error: any) => {
         toast.error(

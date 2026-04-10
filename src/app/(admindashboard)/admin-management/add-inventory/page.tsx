@@ -56,7 +56,7 @@ function AddInventoryItemPage() {
     setSerials((prev) => prev.filter((s) => s !== code));
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
+  const onSubmit = (data: any, methods: any) => {
     if (serials.length === 0) {
       toast.error("Please scan or enter at least one serial number");
       return;
@@ -75,6 +75,7 @@ function AddInventoryItemPage() {
       onSuccess: () => {
         toast.success("Inventory items added successfully", { id: toastId });
         setSerials([]);
+        methods.reset();
       },
       onError: (error: any) => {
         toast.error(

@@ -9,7 +9,7 @@ interface IFormConfig {
 
 interface CustomFormProps extends IFormConfig {
   children: ReactNode;
-  onSubmit: SubmitHandler<any>;
+  onSubmit: (data: any, methods: any) => void;
 }
 
 function CustomForm({
@@ -30,7 +30,7 @@ function CustomForm({
   const handleSubmit = methods.handleSubmit;
 
   const submit: SubmitHandler<any> = (data: any) => {
-    onSubmit(data);
+    onSubmit(data, methods);
     // methods.reset();
   };
 

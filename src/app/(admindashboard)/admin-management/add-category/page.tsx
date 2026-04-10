@@ -10,7 +10,7 @@ import { toast } from "sonner";
 function AddCategoryPage() {
   const { mutate: handleAddCategory, isPending } = useAddCategory();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: any, methods: any) => {
     const toastID = toast.loading("Adding category...");
     const trimmedData = {
       name : data.name.toLowerCase().trim()
@@ -22,6 +22,7 @@ function AddCategoryPage() {
           id: toastID,
           duration: 2000,
         });
+        methods.reset();
       },
       onError: (error:any) => {
         toast.error(error?.message || "Failed to add category", { id: toastID, duration: 2000 });

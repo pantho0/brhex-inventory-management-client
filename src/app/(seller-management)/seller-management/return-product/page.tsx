@@ -19,7 +19,7 @@ const returnReasons = [
 function ReturnProductPage() {
   const { mutate: handleReturnProduct, isPending } = useReturnProduct();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: any, methods: any) => {
     const toastID = toast.loading("Processing return...");
     
     const payload = {
@@ -33,6 +33,7 @@ function ReturnProductPage() {
           id: toastID,
           duration: 2000,
         });
+        methods.reset();
       },
       onError: (error: any) => {
         toast.error(error?.message || "Failed to return product", {

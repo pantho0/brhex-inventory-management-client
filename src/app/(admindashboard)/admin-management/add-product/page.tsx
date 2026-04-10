@@ -20,11 +20,12 @@ function AddProductPage() {
     label: cat?.name?.toUpperCase(),
   }));
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit = (data: any, methods: any) => {
     const toastId = toast.loading("Adding Product....");
     handleAddProduct(data, {
       onSuccess: () => {
         toast.success("Product Added Successfully", { id: toastId });
+        methods.reset();
       },
       onError: (error: any) => {
         toast.error(
